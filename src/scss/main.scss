@@ -1,0 +1,45 @@
+@use './base/fonts';
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	scroll-behavior: smooth;
+}
+
+a,
+button {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.d_none {
+	display: none;
+}
+
+body {
+	height: 100vh;
+	background-color: #303131;
+}
+
+.center-box {
+	// position: fixed;
+	// top: 339px;
+	// left: 225px;
+	margin: 0 auto;
+	height: 229px;
+	width: 991px;
+
+	&__text {
+		font-family: 'Red Rose';
+		font-style: normal;
+		font-weight: 400;
+		color: #ffffff;
+		font-size: 48px;
+
+		&--big {
+			font-weight: 700;
+			font-size: 140px;
+		}
+	}
+}
