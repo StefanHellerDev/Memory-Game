@@ -1,4 +1,6 @@
 @use './base/fonts';
+@use './abstracts/mixin';
+@use './components/play-button';
 
 * {
 	box-sizing: border-box;
@@ -22,11 +24,12 @@ body {
 	background-color: #303131;
 }
 
+.start-page {
+	@include mixin.flex-center;
+}
+
 .center-box {
-	// position: fixed;
-	// top: 339px;
-	// left: 225px;
-	margin: 0 auto;
+	padding-top: 300px;
 	height: 229px;
 	width: 991px;
 
@@ -42,4 +45,9 @@ body {
 			font-size: 140px;
 		}
 	}
+}
+
+#controllerBig {
+	position: absolute;
+	bottom: 0;
 }

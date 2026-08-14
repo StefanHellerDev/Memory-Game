@@ -1,0 +1,31 @@
+.play-button {
+	padding-top: 314px;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	display: grid;
+	place-items: center;
+}
+
+.svg-icon {
+	grid-area: 1 / 1;
+	transition: opacity 256ms ease;
+}
+
+.svg-default {
+	opacity: 1;
+}
+
+.svg-hover {
+	opacity: 0;
+}
+
+.play-button:hover .svg-default,
+.play-button:active .svg-default {
+	opacity: 0;
+}
+
+.play-button:hover .svg-hover,
+.play-button:active .svg-hover {
+	opacity: 1;
+}
