@@ -1,31 +1,54 @@
-.play-button {
-	padding-top: 314px;
+.button {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	position: relative;
+	margin-top: 314px;
+	height: 98px;
+	width: 250px;
 	border: none;
-	background: transparent;
 	cursor: pointer;
-	display: grid;
-	place-items: center;
-}
+	font-family: 'Red Rose';
+	font-weight: 700;
+	transition: all 200ms ease-out;
 
-.svg-icon {
-	grid-area: 1 / 1;
-	transition: opacity 256ms ease;
-}
+	&__controller {
+		position: absolute;
+		left: 24px;
+		transition: transform 200ms ease-out;
+	}
 
-.svg-default {
-	opacity: 1;
-}
+	&__arrow {
+		position: absolute;
+		right: 24px;
+		transition: all 200ms ease-out;
 
-.svg-hover {
-	opacity: 0;
-}
+		&-hover {
+			position: absolute;
+			right: 24px;
+			opacity: 0;
+			transition: all 200ms ease-out;
+		}
+	}
 
-.play-button:hover .svg-default,
-.play-button:active .svg-default {
-	opacity: 0;
-}
+	&--primary {
+		background-color: #f0ea6e;
+		color: #303131;
+		font-size: 40px;
 
-.play-button:hover .svg-hover,
-.play-button:active .svg-hover {
-	opacity: 1;
+		&:hover {
+			scale: 1.1;
+
+			.button__controller {
+				transform: rotate(-25deg);
+			}
+			.button__arrow {
+				opacity: 0;
+
+				&-hover {
+					opacity: 1;
+				}
+			}
+		}
+	}
 }
