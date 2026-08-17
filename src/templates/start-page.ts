@@ -11,11 +11,11 @@ export function startPageTemplate() {
       <p class="center-box__text center-box__text--big">Ready to play?</p>
     </div>
 
-    <button class="button button--primary">
-      <img id="button__controller" src="${buttonController}" alt="Button controller" />
+    <button class="button button--primary" id="playButton">
+      <img class="button__controller" src="${buttonController}" alt="Button controller" />
       <span>Play</span>
-      <img id="button__arrow" src="${buttonArrow}" alt="Button arrow" />
-      <img id="button__arrow-hover" src="${buttonArrowHover}" alt="Button arrow" />
+      <img class="button__arrow" src="${buttonArrow}" alt="Button arrow" />
+      <img class="button__arrow--hover" src="${buttonArrowHover}" alt="Button arrow thick" />
     </button>
   </div>
 

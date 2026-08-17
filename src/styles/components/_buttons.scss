@@ -23,7 +23,7 @@
 		right: 24px;
 		transition: all 200ms ease-out;
 
-		&-hover {
+		&--hover {
 			position: absolute;
 			right: 24px;
 			opacity: 0;
@@ -45,7 +45,7 @@
 			.button__arrow {
 				opacity: 0;
 
-				&-hover {
+				&--hover {
 					opacity: 1;
 				}
 			}
