@@ -1,0 +1,29 @@
+@use '../abstracts/mixin';
+
+.start-page {
+	@include mixin.flex-center;
+}
+
+.center-box {
+	padding-top: 300px;
+	height: 229px;
+	width: 991px;
+
+	&__text {
+		font-family: 'Red Rose';
+		// font-style: normal;
+		font-weight: 400;
+		color: #ffffff;
+		font-size: 48px;
+
+		&--big {
+			font-weight: 700;
+			font-size: 140px;
+		}
+	}
+}
+
+#controllerBig {
+	position: absolute;
+	bottom: 0;
+}

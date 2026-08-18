@@ -1,6 +1,7 @@
 @use './base/fonts';
-@use './abstracts/mixin';
+@use './pages/startpage';
 @use './components/buttons';
+@use './pages/mainpage';
 
 * {
 	box-sizing: border-box;
@@ -22,32 +23,4 @@ button {
 body {
 	height: 100vh;
 	background-color: #303131;
-}
-
-.start-page {
-	@include mixin.flex-center;
-}
-
-.center-box {
-	padding-top: 300px;
-	height: 229px;
-	width: 991px;
-
-	&__text {
-		font-family: 'Red Rose';
-		font-style: normal;
-		font-weight: 400;
-		color: #ffffff;
-		font-size: 48px;
-
-		&--big {
-			font-weight: 700;
-			font-size: 140px;
-		}
-	}
-}
-
-#controllerBig {
-	position: absolute;
-	bottom: 0;
 }

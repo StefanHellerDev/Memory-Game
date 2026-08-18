@@ -21,6 +21,6 @@ export function showMainPage(): void {
 	memoryAppRef.innerHTML = mainPageTemplate();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-	showStartPage();
-});
+// document.addEventListener('DOMContentLoaded', () => {
+// 	showStartPage();
+// });
