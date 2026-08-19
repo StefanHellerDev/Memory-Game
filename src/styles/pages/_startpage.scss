@@ -1,11 +1,13 @@
 @use '../abstracts/mixin';
 
 .start-page {
+	height: 100vh;
 	@include mixin.flex-center;
+	background-color: #303131;
 }
 
 .center-box {
-	padding-top: 300px;
+	padding-top: 200px;
 	height: 229px;
 	width: 991px;
 
