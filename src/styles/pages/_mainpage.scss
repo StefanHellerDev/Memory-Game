@@ -3,18 +3,28 @@
 .main-page {
 	min-height: 100vh;
 	background-color: #ffffff;
-	@include mixin.flex-center(column);
-	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	&--content {
+		display: flex;
+		flex-direction: column;
 		width: 1100px;
 		position: relative;
+
+		> section {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			position: relative;
+		}
 	}
 
 	&__settings-header {
 		font-family: 'Red Rose';
 		font-weight: 700;
-		font-size: 27px;
+		font-size: 54px;
 		margin-bottom: 64px;
 		position: relative;
 
@@ -27,29 +37,110 @@
 	}
 }
 
+.settings-detail {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.flex-column {
+	@include mixin.flex-column;
+}
+
 .settings-group {
+	font-family: 'Almarai';
 	min-width: 0;
 	margin: 0;
 	padding: 0;
 	border: 0;
-	display: flex;
-	flex-direction: column;
 
 	&:not(:first-child) {
 		margin-top: 64px;
 	}
 
 	&--legend {
-		font-family: 'Almarai';
 		font-weight: 700;
-		font-style: bold;
 		font-size: 24px;
 	}
 
 	&--items {
-		font-family: 'Almarai';
-		font-weight: 700;
-		font-style: bold;
+		display: grid;
+		grid-template-columns: 24px 180px auto;
+		align-items: center;
+		column-gap: 12px;
+
 		font-size: 20px;
+		font-weight: 400;
+		cursor: pointer;
+		min-height: 35px;
+		margin-left: 40px;
+
+		> input[type='radio'] {
+			appearance: none;
+			width: 22px;
+			height: 22px;
+			margin: 0 8px 0 0;
+			border: 2px solid rgba(48, 49, 49, 1);
+			border-radius: 50%;
+			background: white;
+			cursor: pointer;
+			position: relative;
+			transition: 0.2s;
+
+			&::before {
+				content: '';
+				position: absolute;
+				width: 8px;
+				height: 8px;
+				top: 50%;
+				left: 50%;
+				border-radius: 50%;
+				background: rgba(48, 49, 49, 1);
+				transform: translate(-50%, -50%) scale(0);
+				transition: 0.2s;
+			}
+
+			&:checked::before {
+				transform: translate(-50%, -50%) scale(1);
+			}
+
+			&:focus-visible {
+				outline: 3px solid #8ec5ff;
+				outline-offset: 3px;
+			}
+		}
+
+		&:hover,
+		&:has(input:checked) {
+			.settings-label-text {
+				font-weight: 700;
+			}
+
+			> input[type='radio'] {
+				border: 1px solid rgba(48, 49, 49, 1);
+				
+				&::before {
+					transform: translate(-50%, -50%) scale(1);
+				}
+			}
+
+			.settings-line {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
 	}
+}
+
+.settings-label-text {
+	display: inline-block;
+	width: 180px;
+}
+
+.settings-line {
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 150ms ease;
 }

@@ -21,6 +21,42 @@ export function showMainPage(): void {
 	memoryAppRef.innerHTML = mainPageTemplate();
 }
 
+
+const themePreview = document.getElementById('theme-preview') as HTMLImageElement | null;
+const themeInputs = document.querySelectorAll<HTMLInputElement>('input[name="gameTheme"]');
+
+let selectedThemeSrc = getSelectedThemeSrc();
+
+themeInputs.forEach((input) => {
+	const label = input.closest('label');
+
+	label?.addEventListener('mouseenter', () => {
+		if (!themePreview || !input.dataset.previewSrc) return;
+		themePreview.src = input.dataset.previewSrc;
+	});
+
+	label?.addEventListener('mouseleave', () => {
+		if (!themePreview) return;
+		themePreview.src = selectedThemeSrc;
+	});
+
+	input.addEventListener('change', () => {
+		if (!input.dataset.previewSrc) return;
+
+		selectedThemeSrc = input.dataset.previewSrc;
+		if (themePreview) themePreview.src = selectedThemeSrc;
+	});
+});
+
+function getSelectedThemeSrc(): string {
+	const checkedInput = document.querySelector<HTMLInputElement>('input[name="gameTheme"]:checked');
+
+	return checkedInput?.dataset.previewSrc || './src/assets/img/code_vibes_theme/theme_visual-code_vibes.png';
+}
+
+
+
+
 // document.addEventListener('DOMContentLoaded', () => {
 // 	showStartPage();
 // });

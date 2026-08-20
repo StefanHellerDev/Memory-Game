@@ -19,81 +19,93 @@
 
       <header class="main-page__settings-header">
         <h1>Settings</h1>
-        <img src="./src/assets/img/settings-header-line.png" alt="Header underline">
+        <img src="./src/assets/img/settings-header-line.png" alt="">
       </header>
 
       <section class="main-page--content">
 
-        <form>
+        <form class="settings-detail">
 
-          <fieldset class="settings-group">
+          <fieldset class="settings-group flex-column">
+
             <legend class="settings-group--legend">
               <img src="./src/assets/img/image_game_themes.png" alt="">
-              Game themes
+              <span>Game themes</span>
             </legend>
 
-            <label>
-              <input type="radio" name="" id="">
-              Code vibes theme
-              <img src="./src/assets/img/settings-line.png" alt="Settings line">
+            <label class="settings-group--items">
+              <input type="radio" name="gameTheme" value="code"
+                data-preview-src="./src/assets/img/code_vibes_theme/theme_visual-code_vibes.png">
+              <span class="settings-label-text">Code vibes theme</span>
+              <img class="settings-line" src="./src/assets/img/settings-line.png" alt="">
             </label>
 
-            <label>
-              <input type="radio" name="" id="">
-              Food theme
-              <img src="./src/assets/img/settings-line.png" alt="Settings line">
+            <label class="settings-group--items">
+              <input type="radio" name="gameTheme" value="game"
+                data-preview-src="./src/assets/img/game_theme/theme_visual-game.png">
+              <span class="settings-label-text">Game theme</span>
+              <img class="settings-line" src="./src/assets/img/settings-line.png" alt="">
+            </label>
+
+            <label class="settings-group--items">
+              <input type="radio" name="gameTheme" value="food"
+                data-preview-src="./src/assets/img/food_theme/theme_visual-food.png">
+              <span class="settings-label-text">Food theme</span>
+              <img class="settings-line" src="./src/assets/img/settings-line.png" alt="">
             </label>
 
           </fieldset>
 
-          <fieldset class="settings-group">
-            <legend>
+          <fieldset class="settings-group flex-column">
+            <legend class="settings-group--legend">
               <img src="./src/assets/img/image_choose_player.png" alt="">
-              Choose player
+              <span>Choose player</span>
             </legend>
 
-            <label>
-              <input type="radio" name="" id="">
-              Blue
-              <img src="./src/assets/img/settings-line.png" alt="Settings line">
+            <label class="settings-group--items">
+              <input type="radio" name="player" id="blue">
+              <span>Blue</span>
+              <img class="settings-line" src="./src/assets/img/settings-line.png" alt="Settings line">
             </label>
 
-            <label>
-              <input type="radio" name="" id="">
-              Orange
-              <img src="./src/assets/img/settings-line.png" alt="Settings line">
+            <label class="settings-group--items">
+              <input type="radio" name="player" id="orange">
+              <span>Orange</span>
+              <img class="settings-line" src="./src/assets/img/settings-line.png" alt="Settings line">
             </label>
           </fieldset>
 
-          <fieldset class="settings-group">
-            <legend>
+          <fieldset class="settings-group flex-column">
+            <legend class="settings-group--legend">
               <img src="./src/assets/img/image_Board_size.png" alt="">
-              Board size
+              <span>Board size</span>
             </legend>
 
-            <label>
-              <input type="radio" name="" id="">
-              16 cards
-              <img src="./src/assets/img/settings-line.png" alt="Settings line">
+            <label class="settings-group--items">
+              <input type="radio" name="boardSize" id="16cards">
+              <span>16 cards</span>
+              <img class="settings-line" src="./src/assets/img/settings-line.png" alt="Settings line">
             </label>
 
-            <label>
-              <input type="radio" name="" id="">
-              24 cards
-              <img src="./src/assets/img/settings-line.png" alt="Settings line">
+            <label class="settings-group--items">
+              <input type="radio" name="boardSize" id="24cards">
+              <span>24 cards</span>
+              <img class="settings-line" src="./src/assets/img/settings-line.png" alt="Settings line">
             </label>
 
-            <label>
-              <input type="radio" name="" id="">
-              36 cards
-              <img src="./src/assets/img/settings-line.png" alt="Settings line">
+            <label class="settings-group--items">
+              <input type="radio" name="boardSize" id="36cards">
+              <span>36 cards</span>
+              <img class="settings-line" src="./src/assets/img/settings-line.png" alt="Settings line">
             </label>
           </fieldset>
 
         </form>
 
         <aside>
-          Bild
+          <img id="theme-preview" src="./src/assets/img/code_vibes_theme/theme_visual-code_vibes.png"
+            alt="Visual theme">
+
           <section>
             Game theme Player Board size Start
           </section>
