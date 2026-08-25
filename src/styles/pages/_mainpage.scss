@@ -144,3 +144,22 @@
 	visibility: hidden;
 	transition: opacity 150ms ease;
 }
+
+aside {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+
+> img {
+	width: 460px;
+	height: 412px;
+}
+
+	> section {
+		margin-top: 45px;
+		width: 546px;
+		height: 81px;
+		padding: 14px 20px 14px 20px;
+		background-color: #F6F6F6;
+	}
+}

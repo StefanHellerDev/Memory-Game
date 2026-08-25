@@ -10,10 +10,9 @@ if (!memoryAppRef) {
 export function showStartPage(): void {
 	if (!memoryAppRef) return;
 	memoryAppRef.innerHTML = startPageTemplate();
-	const playButton = document.getElementById("playButton");
+	const playButton = document.getElementById('playButton');
 	if (!playButton) return;
-  playButton.addEventListener("click", showMainPage);
-
+	playButton.addEventListener('click', showMainPage);
 }
 
 export function showMainPage(): void {
@@ -21,6 +20,9 @@ export function showMainPage(): void {
 	memoryAppRef.innerHTML = mainPageTemplate();
 }
 
+// *************************
+// Main Page / Settings page
+// *************************
 
 const themePreview = document.getElementById('theme-preview') as HTMLImageElement | null;
 const themeInputs = document.querySelectorAll<HTMLInputElement>('input[name="gameTheme"]');
@@ -53,9 +55,6 @@ function getSelectedThemeSrc(): string {
 
 	return checkedInput?.dataset.previewSrc || './src/assets/img/code_vibes_theme/theme_visual-code_vibes.png';
 }
-
-
-
 
 // document.addEventListener('DOMContentLoaded', () => {
 // 	showStartPage();
