@@ -2,15 +2,40 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	position: relative;
-	margin-top: 314px;
-	height: 98px;
-	width: 250px;
 	border: none;
 	cursor: pointer;
 	font-family: 'Red Rose';
 	font-weight: 700;
+	background-color: #f0ea6e;
 	transition: all 200ms ease-out;
+
+	&__start {
+		position: relative;
+		margin-top: 314px;
+		height: 98px;
+		width: 250px;
+
+		&--primary {
+			color: #303131;
+			font-size: 40px;
+
+			&:hover {
+				scale: 1.1;
+
+				.button__controller {
+					transform: rotate(-25deg);
+				}
+
+				.button__arrow {
+					opacity: 0;
+
+					&--hover {
+						opacity: 1;
+					}
+				}
+			}
+		}
+	}
 
 	&__controller {
 		position: absolute;
@@ -31,22 +56,22 @@
 		}
 	}
 
-	&--primary {
-		background-color: #f0ea6e;
-		color: #303131;
-		font-size: 40px;
+	&__play {
+		width: 24px;
+		height: 24px;
+	}
 
-		&:hover {
-			scale: 1.1;
+	&__setting {
+		font-size: 20px;
+		height: 53px;
+		width: 126px;
 
-			.button__controller {
-				transform: rotate(-25deg);
-			}
-			.button__arrow {
-				opacity: 0;
+		&--primary {
+			&:hover {
+				scale: 1.1;
 
-				&--hover {
-					opacity: 1;
+				.button__play {
+					transform: rotate(-5.3deg);
 				}
 			}
 		}

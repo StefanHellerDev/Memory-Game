@@ -11,7 +11,7 @@ export function startPageTemplate() {
       <p class="center-box__text center-box__text--big">Ready to play?</p>
     </div>
 
-    <button class="button button--primary" id="playButton">
+    <button class="button button__start button__start--primary" id="playButton">
       <img class="button__controller" src="${buttonController}" alt="Button controller" />
       <span>Play</span>
       <img class="button__arrow" src="${buttonArrow}" alt="Button arrow" />

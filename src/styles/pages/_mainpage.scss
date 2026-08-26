@@ -120,7 +120,7 @@
 
 			> input[type='radio'] {
 				border: 1px solid rgba(48, 49, 49, 1);
-				
+
 				&::before {
 					transform: translate(-50%, -50%) scale(1);
 				}
@@ -146,20 +146,43 @@
 }
 
 aside {
+	font-family: 'Almarai';
+	font-size: 20px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
 
-> img {
-	width: 460px;
-	height: 412px;
-}
+	> img {
+		width: 460px;
+		height: 412px;
+	}
 
 	> section {
 		margin-top: 45px;
 		width: 546px;
 		height: 81px;
 		padding: 14px 20px 14px 20px;
-		background-color: #F6F6F6;
+		background-color: #f6f6f6;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+
+		> span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
 	}
+}
+
+#displayGameTheme {
+	width: 120px;
+}
+
+#displayPlayer {
+	width: 55px;	
+}
+
+#displayBoardSize {
+	width: 91px;	
 }

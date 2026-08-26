@@ -26,6 +26,7 @@ export function showMainPage(): void {
 
 const themePreview = document.getElementById('theme-preview') as HTMLImageElement | null;
 const themeInputs = document.querySelectorAll<HTMLInputElement>('input[name="gameTheme"]');
+const displayGameTheme = document.getElementById('displayGameTheme');
 
 let selectedThemeSrc = getSelectedThemeSrc();
 
@@ -43,10 +44,17 @@ themeInputs.forEach((input) => {
 	});
 
 	input.addEventListener('change', () => {
-		if (!input.dataset.previewSrc) return;
+		const previewSrc = input.dataset.previewSrc;
+		const themeChoice = input.dataset.themeChoice;
 
-		selectedThemeSrc = input.dataset.previewSrc;
-		if (themePreview) themePreview.src = selectedThemeSrc;
+		if (!previewSrc || !themeChoice) return;
+
+		selectedThemeSrc = previewSrc;
+		if (displayGameTheme) {
+			displayGameTheme.innerText = themeChoice;
+		}
+
+		if (themePreview) themePreview.src = previewSrc;
 	});
 });
 

@@ -35,21 +35,22 @@
 
             <label class="settings-group--items">
               <input type="radio" name="gameTheme" value="code"
-                data-preview-src="./src/assets/img/code_vibes_theme/theme_visual-code_vibes.png">
+                data-preview-src="./src/assets/img/code_vibes_theme/theme_visual-code_vibes.png"
+                data-theme-choice="Code Vibes">
               <span class="settings-label-text">Code vibes theme</span>
               <img class="settings-line" src="./src/assets/img/settings-line.png" alt="">
             </label>
 
             <label class="settings-group--items">
               <input type="radio" name="gameTheme" value="game"
-                data-preview-src="./src/assets/img/game_theme/theme_visual-game.png">
+                data-preview-src="./src/assets/img/game_theme/theme_visual-game.png" data-theme-choice="Game">
               <span class="settings-label-text">Game theme</span>
               <img class="settings-line" src="./src/assets/img/settings-line.png" alt="">
             </label>
 
             <label class="settings-group--items">
               <input type="radio" name="gameTheme" value="food"
-                data-preview-src="./src/assets/img/food_theme/theme_visual-food.png">
+                data-preview-src="./src/assets/img/food_theme/theme_visual-food.png" data-theme-choice="Food">
               <span class="settings-label-text">Food theme</span>
               <img class="settings-line" src="./src/assets/img/settings-line.png" alt="">
             </label>
@@ -107,7 +108,17 @@
             alt="Visual theme">
 
           <section>
-            Game theme Player Board size Start
+            <span id="displayGameTheme">Game theme</span>
+            <img src="./src/assets/img/settings-page-line-before.svg" alt="">
+            <span id="displayPlayer">Player</span>
+            <img src="./src/assets/img/settings-page-line-before.svg" alt="">
+            <span id="displayBoardSize">Board size</span>
+
+            <button class="button button__setting button__setting--primary" id="startButton" disabled>
+              <img class="button__play" src="./src/assets/img/smart_display.png" alt="Start button" />
+              <span>Start</span>
+            </button>
+
           </section>
         </aside>
 
