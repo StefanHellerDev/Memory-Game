@@ -24,7 +24,7 @@
 	&__settings-header {
 		font-family: 'Red Rose';
 		font-weight: 700;
-		font-size: 54px;
+		font-size: 27px;
 		margin-bottom: 64px;
 		position: relative;
 
@@ -180,9 +180,34 @@ aside {
 }
 
 #displayPlayer {
-	width: 55px;	
+	width: 55px;
 }
 
 #displayBoardSize {
-	width: 91px;	
+	width: 91px;
+}
+
+// #displayGameTheme,
+// #displayPlayer,
+// #displayBoardSize {
+// 	display: inline-block;
+// }
+
+.selection-changed {
+	animation: selection-pop 300ms ease-out;
+}
+
+@keyframes selection-pop {
+	0% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(1.1);
+		font-weight: 700;
+	}
+
+	100% {
+		transform: scale(1);
+	}
 }

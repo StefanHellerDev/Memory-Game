@@ -1,6 +1,6 @@
 import './styles/main.scss';
-import { startPageTemplate } from './templates/start-page';
-import { mainPageTemplate } from './templates/main-page';
+import { startPageTemplate } from './templates/start-page-template';
+import { mainPageTemplate } from './templates/main-page-template';
 
 const memoryAppRef = document.getElementById('memoryApp');
 if (!memoryAppRef) {
@@ -18,45 +18,96 @@ export function showStartPage(): void {
 export function showMainPage(): void {
 	if (!memoryAppRef) return;
 	memoryAppRef.innerHTML = mainPageTemplate();
+	initSettingsPage();
 }
 
 // *************************
 // Main Page / Settings page
 // *************************
 
-const themePreview = document.getElementById('theme-preview') as HTMLImageElement | null;
-const themeInputs = document.querySelectorAll<HTMLInputElement>('input[name="gameTheme"]');
-const displayGameTheme = document.getElementById('displayGameTheme');
+export function initSettingsPage(): void {
+	initThemeInputs();
+	initPlayerInputs();
+	initBoardSizeInputs();
+	initStartButton();
+}
 
-let selectedThemeSrc = getSelectedThemeSrc();
+export function initThemeInputs() {
+	const themePreview = document.getElementById('theme-preview') as HTMLImageElement | null;
+	const themeInputs = document.querySelectorAll<HTMLInputElement>('input[name="gameTheme"]');
+	const displayGameTheme = document.getElementById('displayGameTheme');
+	let selectedThemeSrc = getSelectedThemeSrc();
 
-themeInputs.forEach((input) => {
-	const label = input.closest('label');
+	themeInputs.forEach((input) => {
+		const label = input.closest('label');
 
-	label?.addEventListener('mouseenter', () => {
-		if (!themePreview || !input.dataset.previewSrc) return;
-		themePreview.src = input.dataset.previewSrc;
+		label?.addEventListener('mouseenter', () => {
+			if (!themePreview || !input.dataset.previewSrc) return;
+			themePreview.src = input.dataset.previewSrc;
+		});
+
+		label?.addEventListener('mouseleave', () => {
+			if (!themePreview) return;
+			themePreview.src = selectedThemeSrc;
+		});
+
+		input.addEventListener('change', () => {
+			const previewSrc = input.dataset.previewSrc;
+			const themeChoice = input.dataset.themeChoice;
+
+			if (!previewSrc || !themeChoice) return;
+
+			selectedThemeSrc = previewSrc;
+
+			if (displayGameTheme) {
+				displayGameTheme.innerText = themeChoice;
+				animateSelection(displayGameTheme);
+			}
+
+			if (themePreview) themePreview.src = previewSrc;
+
+			updateStartButtonState();
+		});
 	});
+}
 
-	label?.addEventListener('mouseleave', () => {
-		if (!themePreview) return;
-		themePreview.src = selectedThemeSrc;
+export function initPlayerInputs() {
+	const playerInputs = document.querySelectorAll<HTMLInputElement>('input[name="player"]');
+	const displayPlayer = document.getElementById('displayPlayer');
+
+	playerInputs.forEach((input) => {
+		input.addEventListener('change', () => {
+			const playerChoice = input.dataset.playerChoice;
+
+			if (!playerChoice) return;
+
+			if (displayPlayer) {
+				displayPlayer.innerText = playerChoice;
+				animateSelection(displayPlayer);
+			}
+			updateStartButtonState();
+		});
 	});
+}
 
-	input.addEventListener('change', () => {
-		const previewSrc = input.dataset.previewSrc;
-		const themeChoice = input.dataset.themeChoice;
+export function initBoardSizeInputs() {
+	const boardSizeInputs = document.querySelectorAll<HTMLInputElement>('input[name="boardSize"]');
+	const displayBoardSize = document.getElementById('displayBoardSize');
 
-		if (!previewSrc || !themeChoice) return;
+	boardSizeInputs.forEach((input) => {
+		input.addEventListener('change', () => {
+			const boardSizeChoice = input.dataset.boardSizeChoice;
 
-		selectedThemeSrc = previewSrc;
-		if (displayGameTheme) {
-			displayGameTheme.innerText = themeChoice;
-		}
+			if (!boardSizeChoice) return;
 
-		if (themePreview) themePreview.src = previewSrc;
+			if (displayBoardSize) {
+				displayBoardSize.innerText = boardSizeChoice;
+				animateSelection(displayBoardSize);
+			}
+			updateStartButtonState();
+		});
 	});
-});
+}
 
 function getSelectedThemeSrc(): string {
 	const checkedInput = document.querySelector<HTMLInputElement>('input[name="gameTheme"]:checked');
@@ -64,6 +115,76 @@ function getSelectedThemeSrc(): string {
 	return checkedInput?.dataset.previewSrc || './src/assets/img/code_vibes_theme/theme_visual-code_vibes.png';
 }
 
-// document.addEventListener('DOMContentLoaded', () => {
-// 	showStartPage();
-// });
+function animateSelection(element: HTMLElement): void {
+	element.classList.remove('selection-changed');
+	void element.offsetWidth;
+	element.classList.add('selection-changed');
+
+	element.addEventListener('animationend', () => element.classList.remove('selection-changed'), { once: true });
+}
+
+function updateStartButtonState(): void {
+	const themeSelected = document.querySelector('input[name="gameTheme"]:checked');
+	const playerSelected = document.querySelector('input[name="player"]:checked');
+	const boardSizeSelected = document.querySelector('input[name="boardSize"]:checked');
+
+	const allSelected = themeSelected && playerSelected && boardSizeSelected;
+
+	updateStartButton(Boolean(allSelected));
+	updateProgressLines(Boolean(allSelected));
+}
+
+function updateStartButton(allSelected: boolean): void {
+	const startButton = document.getElementById('startButton') as HTMLButtonElement | null;
+
+	if (!startButton) return;
+
+	startButton.disabled = !allSelected;
+}
+
+function updateProgressLines(allSelected: boolean): void {
+	const lines = document.querySelectorAll<HTMLImageElement>('.settings-progress-line');
+
+	const src = allSelected ? './src/assets/img/settings-page-line-after.svg' : './src/assets/img/settings-page-line-before.svg';
+
+	lines.forEach((line) => {
+		line.src = src;
+	});
+}
+
+function getSelectedGameSettings() {
+	const theme = document.querySelector<HTMLInputElement>('input[name="gameTheme"]:checked');
+
+	const player = document.querySelector<HTMLInputElement>('input[name="player"]:checked');
+
+	const boardSize = document.querySelector<HTMLInputElement>('input[name="boardSize"]:checked');
+
+	if (!theme || !player || !boardSize) return null;
+
+	return {
+		theme: theme.value,
+		player: player.value,
+		boardSize: Number(boardSize.value),
+	};
+}
+
+function saveSettingsAndStartGame(): void {
+	const settings = getSelectedGameSettings();
+	if (!settings) return;
+
+	sessionStorage.setItem('gameSettings', JSON.stringify(settings));
+
+	// startGame();
+}
+
+function initStartButton(): void {
+	const startButton = document.getElementById('startButton') as HTMLButtonElement | null;
+
+	if (!startButton) return;
+
+	startButton.addEventListener('click', saveSettingsAndStartGame);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+	showStartPage();
+});
