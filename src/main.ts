@@ -21,6 +21,10 @@ export function showMainPage(): void {
 	initSettingsPage();
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+	showStartPage();
+});
+
 // *************************
 // Main Page / Settings page
 // *************************
@@ -168,15 +172,6 @@ function getSelectedGameSettings() {
 	};
 }
 
-function saveSettingsAndStartGame(): void {
-	const settings = getSelectedGameSettings();
-	if (!settings) return;
-
-	sessionStorage.setItem('gameSettings', JSON.stringify(settings));
-
-	// startGame();
-}
-
 function initStartButton(): void {
 	const startButton = document.getElementById('startButton') as HTMLButtonElement | null;
 
@@ -185,6 +180,11 @@ function initStartButton(): void {
 	startButton.addEventListener('click', saveSettingsAndStartGame);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-	showStartPage();
-});
+function saveSettingsAndStartGame(): void {
+	const settings = getSelectedGameSettings();
+	if (!settings) return;
+
+	sessionStorage.setItem('gameSettings', JSON.stringify(settings));
+
+	// startGame();
+}
