@@ -1,6 +1,7 @@
 import './styles/main.scss';
 import { startPageTemplate } from './templates/start-page-template';
 import { mainPageTemplate } from './templates/main-page-template';
+import { gamePageTemplate } from './templates/game-page-template';
 
 const memoryAppRef = document.getElementById('memoryApp');
 if (!memoryAppRef) {
@@ -113,13 +114,13 @@ export function initBoardSizeInputs() {
 	});
 }
 
-function getSelectedThemeSrc(): string {
+export function getSelectedThemeSrc(): string {
 	const checkedInput = document.querySelector<HTMLInputElement>('input[name="gameTheme"]:checked');
 
 	return checkedInput?.dataset.previewSrc || './src/assets/img/code_vibes_theme/theme_visual-code_vibes.png';
 }
 
-function animateSelection(element: HTMLElement): void {
+export function animateSelection(element: HTMLElement): void {
 	element.classList.remove('selection-changed');
 	void element.offsetWidth;
 	element.classList.add('selection-changed');
@@ -127,7 +128,7 @@ function animateSelection(element: HTMLElement): void {
 	element.addEventListener('animationend', () => element.classList.remove('selection-changed'), { once: true });
 }
 
-function updateStartButtonState(): void {
+export function updateStartButtonState(): void {
 	const themeSelected = document.querySelector('input[name="gameTheme"]:checked');
 	const playerSelected = document.querySelector('input[name="player"]:checked');
 	const boardSizeSelected = document.querySelector('input[name="boardSize"]:checked');
@@ -138,7 +139,7 @@ function updateStartButtonState(): void {
 	updateProgressLines(Boolean(allSelected));
 }
 
-function updateStartButton(allSelected: boolean): void {
+export function updateStartButton(allSelected: boolean): void {
 	const startButton = document.getElementById('startButton') as HTMLButtonElement | null;
 
 	if (!startButton) return;
@@ -146,7 +147,7 @@ function updateStartButton(allSelected: boolean): void {
 	startButton.disabled = !allSelected;
 }
 
-function updateProgressLines(allSelected: boolean): void {
+export function updateProgressLines(allSelected: boolean): void {
 	const lines = document.querySelectorAll<HTMLImageElement>('.settings-progress-line');
 
 	const src = allSelected ? './src/assets/img/settings-page-line-after.svg' : './src/assets/img/settings-page-line-before.svg';
@@ -156,7 +157,7 @@ function updateProgressLines(allSelected: boolean): void {
 	});
 }
 
-function getSelectedGameSettings() {
+export function getSelectedGameSettings() {
 	const theme = document.querySelector<HTMLInputElement>('input[name="gameTheme"]:checked');
 
 	const player = document.querySelector<HTMLInputElement>('input[name="player"]:checked');
@@ -172,7 +173,7 @@ function getSelectedGameSettings() {
 	};
 }
 
-function initStartButton(): void {
+export function initStartButton(): void {
 	const startButton = document.getElementById('startButton') as HTMLButtonElement | null;
 
 	if (!startButton) return;
@@ -180,11 +181,24 @@ function initStartButton(): void {
 	startButton.addEventListener('click', saveSettingsAndStartGame);
 }
 
-function saveSettingsAndStartGame(): void {
+export function saveSettingsAndStartGame(): void {
 	const settings = getSelectedGameSettings();
 	if (!settings) return;
 
 	sessionStorage.setItem('gameSettings', JSON.stringify(settings));
 
-	// startGame();
+	if (!memoryAppRef) return;
+	memoryAppRef.innerHTML = gamePageTemplate();
+	initGamePage();
+}
+
+// *************************
+//        Game page
+// *************************
+
+export function initGamePage(): void {
+	// initThemeInputs();
+	// initPlayerInputs();
+	// initBoardSizeInputs();
+	// initStartButton();
 }
