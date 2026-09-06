@@ -1,4 +1,5 @@
 import './styles/main.scss';
+import './config/themes';
 import { startPageTemplate } from './templates/start-page-template';
 import { mainPageTemplate } from './templates/main-page-template';
 import { gamePageTemplate } from './templates/game-page-template';
