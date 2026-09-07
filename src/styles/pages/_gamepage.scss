@@ -1,4 +1,7 @@
-@each $theme, $colors in $themes {
+@use 'sass:map';
+@use '../themes/themes';
+
+@each $theme, $colors in themes.$themes {
 	[data-theme='#{$theme}'] {
 		--color-background: #{map.get($colors, background)};
 		--color-text: #{map.get($colors, text)};
@@ -10,6 +13,60 @@
 }
 
 .game-page {
+	height: 100vh;
 	background-color: var(--color-background);
 	color: var(--color-text);
+}
+
+.game-board {
+	display: grid;
+	gap: 16px;
+
+	&[data-board-size='16'] {
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	&[data-board-size='24'] {
+		grid-template-columns: repeat(6, 1fr);
+	}
+
+	&[data-board-size='36'] {
+		grid-template-columns: repeat(6, 1fr);
+	}
+}
+
+.memory-card {
+	aspect-ratio: 1;
+	padding: 0;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+
+	&__inner {
+		width: 100%;
+		height: 100%;
+	}
+
+	&__back,
+	&__front {
+		width: 100%;
+		height: 100%;
+		border-radius: 12px;
+	}
+
+	&__back {
+		background-color: var(--color-background-box);
+		// display: none;
+	}
+
+	&__front {
+		display: none;
+		// display: block;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+		}
+	}
 }
