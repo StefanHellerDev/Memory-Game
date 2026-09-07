@@ -214,15 +214,17 @@ function initGamePage(): void {
 	applyTheme(settings.theme);
 
 	const themeConfig = THEMES[settings.theme];
+
 	const pairCount = settings.boardSize / 2;
 	const selectedCards = themeConfig.cards.slice(0, pairCount);
 	const cardPairs = createCardPairs(selectedCards);
+
 	const shuffledCards = randomizeCards(cardPairs);
 
 	if (!memoryAppRef) return;
 	memoryAppRef.innerHTML = gamePageTemplate();
 
-	renderGameBoard(shuffledCards, settings.boardSize);
+	renderGameBoard(shuffledCards, settings.boardSize, themeConfig.cardsBack);
 }
 
 function getStoredGameSettings(): GameSettings | null {
@@ -235,23 +237,46 @@ function applyTheme(theme: ThemeName): void {
 	document.documentElement.dataset.theme = theme;
 }
 
-function createCardPairs(cards: string[]): string[] {
-	return [...cards, ...cards];
+export interface MemoryCard {
+	id: number;
+	pairId: number;
+	imageSrc: string;
 }
 
-function randomizeCards(cards: string[]): string[] {
-	return [...cards].sort(() => Math.random() - 0.5);
+function createCardPairs(cards: string[]): MemoryCard[] {
+	return cards.flatMap((imageSrc, index) => [
+		{
+			id: index * 2,
+			pairId: index,
+			imageSrc,
+		},
+		{
+			id: index * 2 + 1,
+			pairId: index,
+			imageSrc,
+		},
+	]);
 }
 
-function renderGameBoard(cards: string[], boardSize: number): void {
+function randomizeCards<T>(cards: T[]): T[] {
+	const shuffled = [...cards];
+
+	for (let index = shuffled.length - 1; index > 0; index--) {
+		const j = Math.floor(Math.random() * (index + 1));
+
+		[shuffled[index], shuffled[j]] = [shuffled[j], shuffled[index]];
+	}
+	return shuffled;
+}
+
+function renderGameBoard(cards: MemoryCard[], boardSize: number, cardsBack: string[]): void {
 	const gameBoard = document.getElementById('gameBoard');
 	if (!gameBoard) return;
 
 	gameBoard.dataset.boardSize = String(boardSize);
 
 	cards.forEach((cardSrc) => {
-		const card = createMemoryCard(cardSrc);
+		const card = createMemoryCard(cardSrc, cardsBack);
 		gameBoard.appendChild(card);
 	});
 }
-
