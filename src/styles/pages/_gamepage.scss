@@ -1,2 +1,15 @@
-@use '../abstracts/mixin';
+@each $theme, $colors in $themes {
+	[data-theme='#{$theme}'] {
+		--color-background: #{map.get($colors, background)};
+		--color-text: #{map.get($colors, text)};
+		--color-player-blue: #{map.get($colors, player-blue)};
+		--color-player-orange: #{map.get($colors, player-orange)};
+		--color-background-box: #{map.get($colors, background-box)};
+		--color-game-over: #{map.get($colors, game-over)};
+	}
+}
 
+.game-page {
+	background-color: var(--color-background);
+	color: var(--color-text);
+}

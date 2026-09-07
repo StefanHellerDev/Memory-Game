@@ -1,0 +1,28 @@
+@use 'sass:map';
+
+$themes: (
+	code: (
+		background: #303131,
+		text: #ffffff,
+		player-blue: #2bb1ff,
+		player-orange: #f58e39,
+		background-box: rgba(134, 233, 214, 0.2),
+		game-over: #4dd5bc,
+	),
+	game: (
+		background: #303131,
+		text: #ffffff,
+		player-blue: #2bb1ff,
+		player-orange: #f58e39,
+		background-box: rgba(134, 233, 214, 0.2),
+		game-over: #4dd5bc,
+	),
+	food: (
+		background: #303131,
+		text: #ffffff,
+		player-blue: #2bb1ff,
+		player-orange: #f58e39,
+		background-box: rgba(134, 233, 214, 0.2),
+		game-over: #4dd5bc,
+	),
+);
