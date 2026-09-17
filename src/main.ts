@@ -196,10 +196,16 @@ function saveSettingsAndStartGame(): void {
 //        Game page
 // *************************
 
-export interface GameSettings {
+interface GameSettings {
 	theme: ThemeName;
 	player: 'blue' | 'orange';
 	boardSize: 16 | 24 | 36;
+}
+
+interface MemoryCard {
+	id: number;
+	pairId: number;
+	imageSrc: string;
 }
 
 function initGamePage(): void {
@@ -213,12 +219,22 @@ function initGamePage(): void {
 	applyTheme(settings.theme);
 
 	const themeConfig = THEMES[settings.theme];
+	console.log(themeConfig);
 
 	const pairCount = settings.boardSize / 2;
+
 	const selectedCards = themeConfig.cards.slice(0, pairCount);
+
+	const cardPairs = createCardPairs(selectedCards);
+	console.log(cardPairs);
+
+	const shuffledCards = shuffleCards(cardPairs);
+	console.log(shuffledCards);
 
 	if (!memoryAppRef) return;
 	memoryAppRef.innerHTML = gamePageTemplate();
+
+	playGame();
 }
 
 function getStoredGameSettings(): GameSettings | null {
@@ -231,8 +247,37 @@ function applyTheme(theme: ThemeName): void {
 	document.documentElement.dataset.theme = theme;
 }
 
-export interface MemoryCard {
-	id: number;
-	pairId: number;
-	imageSrc: string;
+function createCardPairs(selectedCards: string[]): MemoryCard[] {
+	const cards = selectedCards.map((imageSrc, index) => [
+		{
+			id: index * 2,
+			pairId: index,
+			imageSrc,
+		},
+		{
+			id: index * 2 + 1,
+			pairId: index,
+			imageSrc,
+		},
+	]);
+	return cards.flat();
+}
+
+function shuffleCards(cardPair: MemoryCard[]): MemoryCard[] {
+	let currentIndex = cardPair.length;
+
+	// While there remain elements to shuffle...
+	while (currentIndex != 0) {
+		// Pick a remaining element...
+		let randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex--;
+
+		// And swap it with the current element.
+		[cardPair[currentIndex], cardPair[randomIndex]] = [cardPair[randomIndex], cardPair[currentIndex]];
+	}
+	return cardPair;
+}
+
+function playGame(): void {
+	// Spiellogik
 }

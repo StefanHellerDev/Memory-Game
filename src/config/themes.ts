@@ -1,5 +1,5 @@
 export type ThemeName = 'code' | 'game' | 'food';
-export interface ThemeConfig {
+interface ThemeConfig {
 	name: string;
 	cards: string[];
 	cardsBack: string[];
