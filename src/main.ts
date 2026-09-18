@@ -202,7 +202,7 @@ interface GameSettings {
 	boardSize: 16 | 24 | 36;
 }
 
-interface MemoryCard {
+export interface MemoryCard {
 	id: number;
 	pairId: number;
 	imageSrc: string;
@@ -211,28 +211,21 @@ interface MemoryCard {
 function initGamePage(): void {
 	const settings = getStoredGameSettings();
 	if (!settings) return;
-
-	console.log(settings.theme); //////////////////////////////////////////////////////////////////////////
-	console.log(settings.player); //////////////////////////////////////////////////////////////////////////
-	console.log(settings.boardSize); //////////////////////////////////////////////////////////////////////////
-
+	
 	applyTheme(settings.theme);
 
 	const themeConfig = THEMES[settings.theme];
-	console.log(themeConfig);
 
 	const pairCount = settings.boardSize / 2;
 
 	const selectedCards = themeConfig.cards.slice(0, pairCount);
 
 	const cardPairs = createCardPairs(selectedCards);
-	console.log(cardPairs);
 
 	const shuffledCards = shuffleCards(cardPairs);
-	console.log(shuffledCards);
 
 	if (!memoryAppRef) return;
-	memoryAppRef.innerHTML = gamePageTemplate();
+	memoryAppRef.innerHTML = gamePageTemplate(shuffledCards, settings.boardSize);
 
 	playGame();
 }
@@ -244,7 +237,9 @@ function getStoredGameSettings(): GameSettings | null {
 }
 
 function applyTheme(theme: ThemeName): void {
-	document.documentElement.dataset.theme = theme;
+	const el = document.querySelector('body');
+	if (!el) return;
+	el.dataset.theme = theme;
 }
 
 function createCardPairs(selectedCards: string[]): MemoryCard[] {
@@ -265,14 +260,9 @@ function createCardPairs(selectedCards: string[]): MemoryCard[] {
 
 function shuffleCards(cardPair: MemoryCard[]): MemoryCard[] {
 	let currentIndex = cardPair.length;
-
-	// While there remain elements to shuffle...
 	while (currentIndex != 0) {
-		// Pick a remaining element...
 		let randomIndex = Math.floor(Math.random() * currentIndex);
 		currentIndex--;
-
-		// And swap it with the current element.
 		[cardPair[currentIndex], cardPair[randomIndex]] = [cardPair[randomIndex], cardPair[currentIndex]];
 	}
 	return cardPair;

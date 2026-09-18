@@ -7,8 +7,10 @@
 		--color-text: #{map.get($colors, text)};
 		--color-player-blue: #{map.get($colors, player-blue)};
 		--color-player-orange: #{map.get($colors, player-orange)};
-		--color-background-box: #{map.get($colors, background-box)};
-		--color-game-over: #{map.get($colors, game-over)};
+		--color-background-header-box: #{map.get($colors, background-header-box)};
+		--color-game-over-text: #{map.get($colors, game-over-text)};
+		--color-game-over-bg: #{map.get($colors, game-over-bg)};
+		--color-draw: #{map.get($colors, draw)};
 	}
 }
 
@@ -26,7 +28,7 @@
 header {
 	width: 100%;
 	height: 102px;
-	background-color: aliceblue;
+	background-color: var(--color-background-header-box);
 }
 
 .game-board {
