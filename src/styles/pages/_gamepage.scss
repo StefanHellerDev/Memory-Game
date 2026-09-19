@@ -16,7 +16,7 @@
 
 .game-page {
 	max-width: 1217px;
-	height: 100vh;
+	// height: 100vh;
 	background-color: var(--color-background);
 	color: var(--color-text);
 	display: flex;
@@ -25,7 +25,7 @@
 	flex-direction: column;
 }
 
-header {
+.game-page-header {
 	width: 100%;
 	height: 102px;
 	background-color: var(--color-background-header-box);
@@ -45,5 +45,36 @@ header {
 
 	&[data-board-size='36'] {
 		grid-template-columns: repeat(6, 1fr);
+	}
+}
+
+.memory-card {
+	height: 120px;
+	aspect-ratio: 1 / 1;
+	background-color: transparent;
+	border: none;
+
+	&__inner {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		transform-style: preserve-3d;
+		transition: all 300ms ease-in-out;
+	}
+
+	&__face {
+		position: absolute;
+		inset: 0;
+		// background-color: black;
+		backface-visibility: hidden;
+
+		&--back {
+			transform: rotateY(180deg);
+			// background-color: red;
+		}
+	}
+
+	&.is-flipped .memory-card__inner {
+		transform: rotateY(180deg);
 	}
 }

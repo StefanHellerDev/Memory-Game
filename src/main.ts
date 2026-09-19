@@ -4,6 +4,7 @@ import { startPageTemplate } from './templates/start-page-template';
 import { mainPageTemplate } from './templates/main-page-template';
 import { gamePageTemplate } from './templates/game-page-template';
 import { ThemeName } from './config/themes';
+// import { gameBoardTemplate } from './templates/game-page-template';
 
 const memoryAppRef = document.getElementById('memoryApp');
 if (!memoryAppRef) {
@@ -211,21 +212,18 @@ export interface MemoryCard {
 function initGamePage(): void {
 	const settings = getStoredGameSettings();
 	if (!settings) return;
-	
+
 	applyTheme(settings.theme);
 
 	const themeConfig = THEMES[settings.theme];
-
 	const pairCount = settings.boardSize / 2;
-
 	const selectedCards = themeConfig.cards.slice(0, pairCount);
-
 	const cardPairs = createCardPairs(selectedCards);
-
 	const shuffledCards = shuffleCards(cardPairs);
 
-	if (!memoryAppRef) return;
-	memoryAppRef.innerHTML = gamePageTemplate(shuffledCards, settings.boardSize);
+	console.log(shuffledCards);
+
+	createGameBoard(settings.boardSize, shuffledCards);
 
 	playGame();
 }
@@ -268,6 +266,46 @@ function shuffleCards(cardPair: MemoryCard[]): MemoryCard[] {
 	return cardPair;
 }
 
-function playGame(): void {
-	// Spiellogik
+function createGameBoard(boardSize: number, shuffledCards: MemoryCard[]): void {
+	if (!memoryAppRef) return;
+	memoryAppRef.innerHTML = gamePageTemplate(boardSize);
+
+	const gameBoardRef = document.getElementById('gameBoard');
+	if (!gameBoardRef) return;	
+
+	for (let i = 0; i < shuffledCards.length; i++) {
+		const card = shuffledCards[i];
+		gameBoardRef.innerHTML += `
+		<section id="field">
+    	<button class="memory-card" data-pair-id="${card.pairId}" data-card-id="${card.id}">
+      	<div class="memory-card__inner">
+        	<div class="memory-card__face">
+						<img src="${card.imageSrc}">
+					</div>
+        	<div class="memory-card__face memory-card__face--back">
+						<img src="./src/assets/img/code_vibes_theme/Code_vibes_card_back.png" alt="">
+					</div>
+      	</div>
+    	</button>
+  	</section>
+`;
+	}
 }
+
+function playGame(): void {
+	clickAndRotateCard();
+}
+
+function clickAndRotateCard(): void {
+	const fieldRef = document.getElementById('field');
+	if (fieldRef) {
+		fieldRef.addEventListener('click', (e) => {
+			const clickedCard = (e.target as HTMLElement).closest('.memory-card') as HTMLButtonElement;
+			console.log(clickedCard);
+			if (clickedCard) {
+				clickedCard.classList.toggle('is-flipped');
+			}
+		});
+	}
+}
+
