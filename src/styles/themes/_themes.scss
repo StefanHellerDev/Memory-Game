@@ -9,6 +9,8 @@ $themes: (
 		game-over-text: #4dd5bc,
 		game-over-bg: #303131,
 		draw: #4dd5bc,
+		header-font: 'Red Rose',
+		header-font-weight: 400,
 	),
 
 	game: (
@@ -20,6 +22,8 @@ $themes: (
 		game-over-text: #ed1b76,
 		game-over-bg: #294f60,
 		draw: #ed1b76,
+		header-font: 'Orbitron',
+		header-font-weight: 700,
 	),
 
 	food: (
@@ -31,5 +35,7 @@ $themes: (
 		game-over-text: #ffffff,
 		game-over-bg: #f3832d,
 		draw: #f3832d,
+		header-font: 'Klee One',
+		header-font-weight: 600,
 	),
 );

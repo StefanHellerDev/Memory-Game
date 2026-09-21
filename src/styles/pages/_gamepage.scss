@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '../themes/themes';
+@use '../abstracts/mixin';
 
 @each $theme, $colors in themes.$themes {
 	[data-theme='#{$theme}'] {
@@ -11,6 +12,8 @@
 		--color-game-over-text: #{map.get($colors, game-over-text)};
 		--color-game-over-bg: #{map.get($colors, game-over-bg)};
 		--color-draw: #{map.get($colors, draw)};
+		--header-font: #{map.get($colors, header-font)};
+		--header-font-weight: #{map.get($colors, header-font-weight)};
 	}
 }
 
@@ -35,10 +38,23 @@
 		justify-content: space-between;
 		align-items: center;
 		font-size: 32px;
+		font-family: var(--header-font);
+		font-weight: var(--header-font-weight);
 
 		> img {
 			width: 173px;
 		}
+	}
+
+	&__currentPlayerBox {
+		@include mixin.flex-center(row);
+	}
+
+	&__showActivePlayer {
+		@include mixin.flex-center(row);
+		width: 41px;
+		height: 40px;
+		background-color: var(--color-player-blue);
 	}
 
 	&__board {

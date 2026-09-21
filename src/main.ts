@@ -27,8 +27,8 @@ function showMainPage(): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	showStartPage(); // normal start
-	// initGamePage(); // start at game page
+	// showStartPage(); // normal start
+	initGamePage(); // start at game page
 });
 
 // *************************
