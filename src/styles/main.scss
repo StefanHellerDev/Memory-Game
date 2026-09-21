@@ -6,6 +6,6 @@
 @use './pages/mainpage';
 @use './pages/gamepage';
 
-// body {
-
-// }
+body {
+	background-color: var(--color-background);
+}

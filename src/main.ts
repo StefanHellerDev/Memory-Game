@@ -1,5 +1,6 @@
 import './styles/main.scss';
 import { THEMES } from './config/themes';
+import { ThemeConfig } from './config/themes';
 import { startPageTemplate } from './templates/start-page-template';
 import { mainPageTemplate } from './templates/main-page-template';
 import { gamePageTemplate } from './templates/game-page-template';
@@ -26,7 +27,8 @@ function showMainPage(): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	showStartPage();
+	showStartPage(); // normal start
+	// initGamePage(); // start at game page
 });
 
 // *************************
@@ -216,6 +218,9 @@ function initGamePage(): void {
 	applyTheme(settings.theme);
 
 	const themeConfig = THEMES[settings.theme];
+	console.log(themeConfig);
+	console.log(themeConfig.cardsBack);
+	
 	const pairCount = settings.boardSize / 2;
 	const selectedCards = themeConfig.cards.slice(0, pairCount);
 	const cardPairs = createCardPairs(selectedCards);
@@ -223,7 +228,7 @@ function initGamePage(): void {
 
 	console.log(shuffledCards);
 
-	createGameBoard(settings.boardSize, shuffledCards);
+	createGameBoard(settings.boardSize, shuffledCards, themeConfig);
 
 	playGame();
 }
@@ -266,9 +271,9 @@ function shuffleCards(cardPair: MemoryCard[]): MemoryCard[] {
 	return cardPair;
 }
 
-function createGameBoard(boardSize: number, shuffledCards: MemoryCard[]): void {
+function createGameBoard(boardSize: number, shuffledCards: MemoryCard[], themeConfig: ThemeConfig): void {
 	if (!memoryAppRef) return;
-	memoryAppRef.innerHTML = gamePageTemplate(boardSize);
+	memoryAppRef.innerHTML = gamePageTemplate(boardSize, themeConfig);
 
 	const gameBoardRef = document.getElementById('gameBoard');
 	if (!gameBoardRef) return;	
@@ -279,11 +284,11 @@ function createGameBoard(boardSize: number, shuffledCards: MemoryCard[]): void {
 		<section id="field">
     	<button class="memory-card" data-pair-id="${card.pairId}" data-card-id="${card.id}">
       	<div class="memory-card__inner">
-        	<div class="memory-card__face">
-						<img src="${card.imageSrc}">
-					</div>
         	<div class="memory-card__face memory-card__face--back">
-						<img src="./src/assets/img/code_vibes_theme/Code_vibes_card_back.png" alt="">
+						<img src="${card.imageSrc}" alt="Front of Memory Card">
+					</div>
+        	<div class="memory-card__face">
+						<img src="${themeConfig.cardsBack}" alt="Back of Memory Card">
 					</div>
       	</div>
     	</button>
