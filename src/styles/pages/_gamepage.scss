@@ -21,15 +21,14 @@
 	max-width: 1217px;
 	width: 100%;
 	margin: 0 auto;
-	// height: 100vh;
 	background-color: var(--color-background);
 	color: var(--color-text);
 	display: flex;
-	// justify-content: center;
 	align-items: center;
 	flex-direction: column;
 
 	&__header {
+		padding: 24px;
 		width: 100%;
 		height: 100px;
 		background-color: var(--color-background-header-box);
@@ -43,6 +42,34 @@
 
 		> img {
 			width: 173px;
+		}
+	}
+
+	&__score-board {
+		font-family: 'Delius Unicase';
+		font-weight: 700;
+		font-size: 30px;
+		padding: 0 16px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 40px;
+		width: 159px;
+		height: 54px;
+		border-radius: 10px;
+		background-color: white;
+
+		&--single-score {
+			display: flex;
+			align-items: center;
+
+			&-orange {
+				color: var(--color-player-orange);
+			}
+
+			&-blue {
+				color: var(--color-player-blue);
+			}
 		}
 	}
 
@@ -62,7 +89,7 @@
 
 		&[data-board-size='16'] {
 			grid-template-columns: repeat(4, 1fr);
-			gap: 18px;
+			gap: 16px;
 		}
 
 		&[data-board-size='24'] {
@@ -94,12 +121,10 @@
 	&__face {
 		position: absolute;
 		inset: 0;
-		// background-color: black;
 		backface-visibility: hidden;
 
 		&--back {
 			transform: rotateY(180deg);
-			// background-color: red;
 		}
 	}
 
