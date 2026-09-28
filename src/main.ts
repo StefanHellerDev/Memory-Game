@@ -27,8 +27,8 @@ function showMainPage(): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	// showStartPage(); // normal start
-	initGamePage(); // start at game page
+	showStartPage(); // normal start
+	// initGamePage(); // start at game page
 });
 
 // *************************
@@ -218,15 +218,10 @@ function initGamePage(): void {
 	applyTheme(settings.theme);
 
 	const themeConfig = THEMES[settings.theme];
-	console.log(themeConfig);
-	console.log(themeConfig.cardsBack);
-	
 	const pairCount = settings.boardSize / 2;
 	const selectedCards = themeConfig.cards.slice(0, pairCount);
 	const cardPairs = createCardPairs(selectedCards);
 	const shuffledCards = shuffleCards(cardPairs);
-
-	console.log(shuffledCards);
 
 	createGameBoard(settings.boardSize, shuffledCards, themeConfig);
 
@@ -240,9 +235,9 @@ function getStoredGameSettings(): GameSettings | null {
 }
 
 function applyTheme(theme: ThemeName): void {
-	const el = document.querySelector('body');
-	if (!el) return;
-	el.dataset.theme = theme;
+	const element = document.querySelector('body');
+	if (!element) return;
+	element.dataset.theme = theme;
 }
 
 function createCardPairs(selectedCards: string[]): MemoryCard[] {
@@ -276,7 +271,7 @@ function createGameBoard(boardSize: number, shuffledCards: MemoryCard[], themeCo
 	memoryAppRef.innerHTML = gamePageTemplate(boardSize, themeConfig);
 
 	const gameBoardRef = document.getElementById('gameBoard');
-	if (!gameBoardRef) return;	
+	if (!gameBoardRef) return;
 
 	for (let i = 0; i < shuffledCards.length; i++) {
 		const card = shuffledCards[i];
@@ -302,15 +297,13 @@ function playGame(): void {
 }
 
 function clickAndRotateCard(): void {
-	const fieldRef = document.getElementById('field');
+	const fieldRef = document.getElementById('gameBoard');
 	if (fieldRef) {
 		fieldRef.addEventListener('click', (e) => {
 			const clickedCard = (e.target as HTMLElement).closest('.memory-card') as HTMLButtonElement;
-			console.log(clickedCard);
 			if (clickedCard) {
 				clickedCard.classList.toggle('is-flipped');
 			}
 		});
 	}
 }
-
