@@ -4,6 +4,7 @@ import { ThemeConfig } from './config/themes';
 import { startPageTemplate } from './templates/start-page-template';
 import { mainPageTemplate } from './templates/main-page-template';
 import { gamePageTemplate } from './templates/game-page-template';
+import { createSingleCard } from './templates/game-page-template';
 import { ThemeName } from './config/themes';
 // import { gameBoardTemplate } from './templates/game-page-template';
 
@@ -27,8 +28,8 @@ function showMainPage(): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	showStartPage(); // normal start
-	// initGamePage(); // start at game page
+	// showStartPage(); // normal start
+	initGamePage(); // start at game page
 });
 
 // *************************
@@ -225,7 +226,7 @@ function initGamePage(): void {
 
 	createGameBoard(settings.boardSize, shuffledCards, themeConfig);
 
-	playGame();
+	playGame(settings.player);
 }
 
 function getStoredGameSettings(): GameSettings | null {
@@ -275,35 +276,61 @@ function createGameBoard(boardSize: number, shuffledCards: MemoryCard[], themeCo
 
 	for (let i = 0; i < shuffledCards.length; i++) {
 		const card = shuffledCards[i];
-		gameBoardRef.innerHTML += `
-		<section id="field">
-    	<button class="memory-card" data-pair-id="${card.pairId}" data-card-id="${card.id}">
-      	<div class="memory-card__inner">
-        	<div class="memory-card__face memory-card__face--back">
-						<img src="${card.imageSrc}" alt="Front of Memory Card">
-					</div>
-        	<div class="memory-card__face">
-						<img src="${themeConfig.cardsBack}" alt="Back of Memory Card">
-					</div>
-      	</div>
-    	</button>
-  	</section>
-`;
+		createSingleCard(gameBoardRef, card, themeConfig);
 	}
 }
 
-function playGame(): void {
+function playGame(firstColor: string): void {
+	let currentPlayer = firstColor;
+
+	setCurrentPlayerColor(currentPlayer);
 	clickAndRotateCard();
 }
 
-function clickAndRotateCard(): void {
-	const fieldRef = document.getElementById('gameBoard');
-	if (fieldRef) {
-		fieldRef.addEventListener('click', (e) => {
-			const clickedCard = (e.target as HTMLElement).closest('.memory-card') as HTMLButtonElement;
-			if (clickedCard) {
-				clickedCard.classList.toggle('is-flipped');
-			}
-		});
+function setCurrentPlayerColor(currentPlayerColor: string): void {
+	const showActivePlayer = document.querySelector<HTMLElement>('.game-page__showActivePlayer');
+	if (showActivePlayer) {
+		if (currentPlayerColor == 'blue') {
+			showActivePlayer.style.backgroundColor = 'var(--color-player-blue)';
+		} else {
+			showActivePlayer.style.backgroundColor = 'var(--color-player-orange)';
+		}
 	}
+}
+
+function clickAndRotateCard(): void {
+	let firstCard: HTMLButtonElement | null = null;
+	let secondCard: HTMLButtonElement | null = null;
+
+	const fieldRef = document.getElementById('gameBoard');
+	if (!fieldRef) return;
+
+	fieldRef.addEventListener('click', (e) => {
+		const target = e.target as HTMLElement;
+		const clickedCard = target.closest<HTMLButtonElement>('.memory-card');
+		if (!clickedCard) return;
+
+		clickedCard.classList.toggle('is-flipped');
+
+		if (!firstCard) {
+			firstCard = clickedCard;
+			return;
+		}
+
+		if (clickedCard === firstCard) return;
+
+		secondCard = clickedCard;
+
+		console.log('First:', firstCard.dataset.pairId);
+		console.log('Second:', secondCard.dataset.pairId);
+
+		if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
+			console.log('Pair found!');
+		} else {
+			console.log('No match!');
+		}
+
+		firstCard = null;
+		secondCard = null;
+	});
 }
