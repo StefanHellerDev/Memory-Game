@@ -6,7 +6,10 @@ import { mainPageTemplate } from './templates/main-page-template';
 import { gamePageTemplate } from './templates/game-page-template';
 import { createSingleCard } from './templates/game-page-template';
 import { ThemeName } from './config/themes';
-// import { gameBoardTemplate } from './templates/game-page-template';
+
+let activePlayer: string; // blue or orange
+let pointsBlue = 0;
+let pointsOrange = 0;
 
 const memoryAppRef = document.getElementById('memoryApp');
 if (!memoryAppRef) {
@@ -269,7 +272,7 @@ function shuffleCards(cardPair: MemoryCard[]): MemoryCard[] {
 
 function createGameBoard(boardSize: number, shuffledCards: MemoryCard[], themeConfig: ThemeConfig): void {
 	if (!memoryAppRef) return;
-	memoryAppRef.innerHTML = gamePageTemplate(boardSize, themeConfig);
+	memoryAppRef.innerHTML = gamePageTemplate(boardSize, themeConfig, pointsBlue, pointsOrange);
 
 	const gameBoardRef = document.getElementById('gameBoard');
 	if (!gameBoardRef) return;
@@ -281,16 +284,16 @@ function createGameBoard(boardSize: number, shuffledCards: MemoryCard[], themeCo
 }
 
 function playGame(firstColor: string): void {
-	let currentPlayer = firstColor;
+	activePlayer = firstColor;
 
-	setCurrentPlayerColor(currentPlayer);
+	setCurrentPlayerColor(activePlayer);
 	clickAndRotateCard();
 }
 
-function setCurrentPlayerColor(currentPlayerColor: string): void {
+function setCurrentPlayerColor(activePlayer: string): void {
 	const showActivePlayer = document.querySelector<HTMLElement>('.game-page__showActivePlayer');
 	if (showActivePlayer) {
-		if (currentPlayerColor == 'blue') {
+		if (activePlayer == 'blue') {
 			showActivePlayer.style.backgroundColor = 'var(--color-player-blue)';
 		} else {
 			showActivePlayer.style.backgroundColor = 'var(--color-player-orange)';
@@ -326,6 +329,7 @@ function clickAndRotateCard(): void {
 
 		if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
 			console.log('Pair found!');
+			addOnePointToActivePlayer();
 		} else {
 			console.log('No match!');
 		}
@@ -333,4 +337,33 @@ function clickAndRotateCard(): void {
 		firstCard = null;
 		secondCard = null;
 	});
+}
+
+function addOnePointToActivePlayer(): void {
+	if (activePlayer == 'blue') {
+		pointsBlue++;
+	} else if (activePlayer == 'orange') {
+		pointsOrange++;
+	}
+	updateScoreBoard(activePlayer);
+	console.log('Blue: ', pointsBlue);
+	console.log('Orange: ', pointsOrange);
+	return;
+}
+
+function updateScoreBoard(activePlayer: string): void {
+	if (activePlayer == 'orange') {
+		const scoreRef = document.getElementById('pointsOrange');
+		if (!scoreRef) {
+			throw new Error('Element with id "pointsOrange" not found.');
+		}
+		scoreRef.innerHTML = `${pointsOrange}`;
+	} else {
+		const scoreRef = document.getElementById('pointsBlue');
+		if (!scoreRef) {
+			throw new Error('Element with id "pointsBlue" not found.');
+		}
+		scoreRef.innerHTML = `${pointsBlue}`;
+	}
+	return;
 }
