@@ -324,14 +324,18 @@ function clickAndRotateCard(): void {
 
 		secondCard = clickedCard;
 
-		console.log('First:', firstCard.dataset.pairId);
-		console.log('Second:', secondCard.dataset.pairId);
-
 		if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
 			console.log('Pair found!');
 			addOnePointToActivePlayer();
 		} else {
 			console.log('No match!');
+			if (activePlayer == 'blue') {
+				activePlayer = 'orange';
+				setCurrentPlayerColor(activePlayer);
+			} else if (activePlayer == 'orange') {
+				activePlayer = 'blue';
+				setCurrentPlayerColor(activePlayer);
+			}
 		}
 
 		firstCard = null;
@@ -346,8 +350,6 @@ function addOnePointToActivePlayer(): void {
 		pointsOrange++;
 	}
 	updateScoreBoard(activePlayer);
-	console.log('Blue: ', pointsBlue);
-	console.log('Orange: ', pointsOrange);
 	return;
 }
 
