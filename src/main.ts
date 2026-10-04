@@ -312,6 +312,7 @@ function clickAndRotateCard(): void {
 		const target = e.target as HTMLElement;
 		const clickedCard = target.closest<HTMLButtonElement>('.memory-card');
 		if (!clickedCard) return;
+		if (clickedCard.classList.contains('is-matched')) return;
 
 		clickedCard.classList.toggle('is-flipped');
 
@@ -327,8 +328,18 @@ function clickAndRotateCard(): void {
 		if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
 			console.log('Pair found!');
 			addOnePointToActivePlayer();
+			firstCard.classList.add('is-matched');
+			secondCard.classList.add('is-matched');
 		} else {
 			console.log('No match!');
+			const cardOne = firstCard;
+			const cardTwo = secondCard;
+			setTimeout(() => {
+				if (!cardOne) return;
+				if (!cardTwo) return;
+				rotateCardsBack(cardOne, cardTwo);
+			}, 1000);
+
 			if (activePlayer == 'blue') {
 				activePlayer = 'orange';
 				setCurrentPlayerColor(activePlayer);
@@ -368,4 +379,9 @@ function updateScoreBoard(activePlayer: string): void {
 		scoreRef.innerHTML = `${pointsBlue}`;
 	}
 	return;
+}
+
+function rotateCardsBack(cardOne: HTMLButtonElement, cardTwo: HTMLButtonElement): void {
+	cardOne.classList.remove('is-flipped');
+	cardTwo.classList.remove('is-flipped');
 }
