@@ -229,7 +229,7 @@ function initGamePage(): void {
 
 	createGameBoard(settings.boardSize, shuffledCards, themeConfig);
 
-	playGame(settings.player);
+	playGame(settings.player, settings.boardSize);
 }
 
 function getStoredGameSettings(): GameSettings | null {
@@ -283,11 +283,11 @@ function createGameBoard(boardSize: number, shuffledCards: MemoryCard[], themeCo
 	}
 }
 
-function playGame(firstColor: string): void {
+function playGame(firstColor: string, boardSize: number): void {
 	activePlayer = firstColor;
 
 	setCurrentPlayerColor(activePlayer);
-	clickAndRotateCard();
+	clickAndRotateCard(boardSize);
 }
 
 function setCurrentPlayerColor(activePlayer: string): void {
@@ -301,7 +301,7 @@ function setCurrentPlayerColor(activePlayer: string): void {
 	}
 }
 
-function clickAndRotateCard(): void {
+function clickAndRotateCard(boardSize: number): void {
 	let firstCard: HTMLButtonElement | null = null;
 	let secondCard: HTMLButtonElement | null = null;
 	let isCheckingCards = false;
@@ -332,6 +332,7 @@ function clickAndRotateCard(): void {
 			addOnePointToActivePlayer();
 			firstCard.classList.add('is-matched');
 			secondCard.classList.add('is-matched');
+			checkIfMatchEnds(boardSize);
 		} else {
 			console.log('No match!');
 			isCheckingCards = true;
@@ -339,7 +340,6 @@ function clickAndRotateCard(): void {
 			const cardTwo = secondCard;
 			setTimeout(() => {
 				rotateCardsBack(cardOne, cardTwo);
-
 				firstCard = null;
 				secondCard = null;
 				isCheckingCards = false;
@@ -357,6 +357,7 @@ function clickAndRotateCard(): void {
 		firstCard = null;
 		secondCard = null;
 	});
+
 	return;
 }
 
@@ -383,6 +384,13 @@ function updateScoreBoard(activePlayer: string): void {
 			throw new Error('Element with id "pointsBlue" not found.');
 		}
 		scoreRef.innerHTML = `${pointsBlue}`;
+	}
+	return;
+}
+
+function checkIfMatchEnds(boardSize: number): void {
+	if (boardSize / 2 == pointsBlue + pointsOrange) {
+		console.log('Game end!!!');
 	}
 	return;
 }
