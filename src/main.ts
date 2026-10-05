@@ -304,11 +304,13 @@ function setCurrentPlayerColor(activePlayer: string): void {
 function clickAndRotateCard(): void {
 	let firstCard: HTMLButtonElement | null = null;
 	let secondCard: HTMLButtonElement | null = null;
+	let isCheckingCards = false;
 
 	const fieldRef = document.getElementById('gameBoard');
 	if (!fieldRef) return;
 
 	fieldRef.addEventListener('click', (e) => {
+		if (isCheckingCards) return;
 		const target = e.target as HTMLElement;
 		const clickedCard = target.closest<HTMLButtonElement>('.memory-card');
 		if (!clickedCard) return;
@@ -332,12 +334,15 @@ function clickAndRotateCard(): void {
 			secondCard.classList.add('is-matched');
 		} else {
 			console.log('No match!');
+			isCheckingCards = true;
 			const cardOne = firstCard;
 			const cardTwo = secondCard;
 			setTimeout(() => {
-				if (!cardOne) return;
-				if (!cardTwo) return;
 				rotateCardsBack(cardOne, cardTwo);
+
+				firstCard = null;
+				secondCard = null;
+				isCheckingCards = false;
 			}, 1000);
 
 			if (activePlayer == 'blue') {
@@ -352,6 +357,7 @@ function clickAndRotateCard(): void {
 		firstCard = null;
 		secondCard = null;
 	});
+	return;
 }
 
 function addOnePointToActivePlayer(): void {
@@ -384,4 +390,5 @@ function updateScoreBoard(activePlayer: string): void {
 function rotateCardsBack(cardOne: HTMLButtonElement, cardTwo: HTMLButtonElement): void {
 	cardOne.classList.remove('is-flipped');
 	cardTwo.classList.remove('is-flipped');
+	return;
 }
