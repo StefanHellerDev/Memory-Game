@@ -5,6 +5,7 @@
 @use './pages/startpage';
 @use './pages/mainpage';
 @use './pages/gamepage';
+@use './pages/gameoverpage';
 
 body {
 	background-color: var(--color-background);

@@ -1,6 +1,5 @@
 import { ThemeConfig } from '../config/themes';
 import { MemoryCard } from '../main';
-import chessPawn from '../assets/img/chess_pawn.svg';
 
 export function gamePageTemplate(boardSize: number, themeConfig: ThemeConfig, pointsBlue: number, pointsOrange: number) {
 	return `

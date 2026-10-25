@@ -4,6 +4,7 @@ import { ThemeConfig } from './config/themes';
 import { startPageTemplate } from './templates/start-page-template';
 import { mainPageTemplate } from './templates/main-page-template';
 import { gamePageTemplate } from './templates/game-page-template';
+import { gameOverPageTemplate } from './templates/game-over-page-template';
 import { createSingleCard } from './templates/game-page-template';
 import { ThemeName } from './config/themes';
 
@@ -229,7 +230,7 @@ function initGamePage(): void {
 
 	createGameBoard(settings.boardSize, shuffledCards, themeConfig);
 
-	playGame(settings.player, settings.boardSize);
+	playGame(settings.player, settings.boardSize, themeConfig);
 }
 
 function getStoredGameSettings(): GameSettings | null {
@@ -283,11 +284,11 @@ function createGameBoard(boardSize: number, shuffledCards: MemoryCard[], themeCo
 	}
 }
 
-function playGame(firstColor: string, boardSize: number): void {
+function playGame(firstColor: string, boardSize: number, themeConfig: ThemeConfig): void {
 	activePlayer = firstColor;
 
 	setCurrentPlayerColor(activePlayer);
-	clickAndRotateCard(boardSize);
+	clickAndRotateCard(boardSize, themeConfig);
 }
 
 function setCurrentPlayerColor(activePlayer: string): void {
@@ -301,7 +302,7 @@ function setCurrentPlayerColor(activePlayer: string): void {
 	}
 }
 
-function clickAndRotateCard(boardSize: number): void {
+function clickAndRotateCard(boardSize: number, themeConfig: ThemeConfig): void {
 	let firstCard: HTMLButtonElement | null = null;
 	let secondCard: HTMLButtonElement | null = null;
 	let isCheckingCards = false;
@@ -332,7 +333,7 @@ function clickAndRotateCard(boardSize: number): void {
 			addOnePointToActivePlayer();
 			firstCard.classList.add('is-matched');
 			secondCard.classList.add('is-matched');
-			checkIfMatchEnds(boardSize);
+			checkIfMatchEnds(boardSize, themeConfig);
 		} else {
 			console.log('No match!');
 			isCheckingCards = true;
@@ -388,9 +389,10 @@ function updateScoreBoard(activePlayer: string): void {
 	return;
 }
 
-function checkIfMatchEnds(boardSize: number): void {
+function checkIfMatchEnds(boardSize: number, themeConfig: ThemeConfig): void {
 	if (boardSize / 2 == pointsBlue + pointsOrange) {
 		console.log('Game end!!!');
+		gameOver(themeConfig);
 	}
 	return;
 }
@@ -399,4 +401,13 @@ function rotateCardsBack(cardOne: HTMLButtonElement, cardTwo: HTMLButtonElement)
 	cardOne.classList.remove('is-flipped');
 	cardTwo.classList.remove('is-flipped');
 	return;
+}
+
+// *************************
+//        Game OVER
+// *************************
+
+function gameOver(themeConfig: ThemeConfig): void {
+if (!memoryAppRef) return;
+	memoryAppRef.innerHTML = gameOverPageTemplate(themeConfig);
 }
