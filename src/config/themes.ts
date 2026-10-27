@@ -5,6 +5,7 @@ export interface ThemeConfig {
 	cardsBack: string[];
 	backToGameButton: string[];
 	exitButton: string[];
+	gameOver: string[];
 }
 
 export const THEMES: Record<ThemeName, ThemeConfig> = {
@@ -33,6 +34,7 @@ export const THEMES: Record<ThemeName, ThemeConfig> = {
 		cardsBack: ['./src/assets/img/code_vibes_theme/Code_vibes_card_back.png'],
 		backToGameButton: ['./src/assets/img/code_vibes_theme/Code_vibes_backtogame.png', './src/assets/img/code_vibes_theme/Code_vibes_backtogame_hover.png'],
 		exitButton: ['./src/assets/img/code_vibes_theme/Code_vibes_exit_button.png', './src/assets/img/code_vibes_theme/Code_vibes_exit_button_hover.png'],
+		gameOver: ['./src/assets/img/code_vibes_theme/Code_vibes_game_over.png'],
 	},
 
 	game: {
@@ -60,6 +62,7 @@ export const THEMES: Record<ThemeName, ThemeConfig> = {
 		cardsBack: ['./src/assets/img/game_theme/game_card_back.png'],
 		backToGameButton: ['./src/assets/img/game_theme/game_backtogame.png', './src/assets/img/game_theme/game_backtogame_hover.png'],
 		exitButton: ['./src/assets/img/game_theme/game_exit_button.png', './src/assets/img/game_theme/game_exit_button_hover.png'],
+		gameOver: ['./'],
 	},
 
 	food: {
@@ -87,5 +90,6 @@ export const THEMES: Record<ThemeName, ThemeConfig> = {
 		cardsBack: ['./src/assets/img/food_theme/food_card_back.png'],
 		backToGameButton: ['./src/assets/img/food_theme/food_backtogame.png', './src/assets/img/food_theme/food_backtogame_hover.png'],
 		exitButton: ['./src/assets/img/food_theme/food_exit_button.png', './src/assets/img/food_theme/food_exit_button_hover.png'],
+		gameOver: ['./'],
 	},
 };
