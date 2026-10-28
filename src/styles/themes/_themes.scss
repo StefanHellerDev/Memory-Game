@@ -11,6 +11,7 @@ $themes: (
 		draw: #4dd5bc,
 		header-font: 'Red Rose',
 		header-font-weight: 400,
+		game-over-background: #F3832D,
 		final-score-box-background: rgba(134, 233, 214, 0.2),
 	),
 
@@ -25,7 +26,8 @@ $themes: (
 		draw: #ed1b76,
 		header-font: 'Orbitron',
 		header-font-weight: 700,
-		final-score-box-background: rgba(134, 233, 214, 0.2),
+		game-over-background: #F3832D,
+		final-score-box-background: #ffffff,
 	),
 
 	food: (
@@ -39,6 +41,7 @@ $themes: (
 		draw: #f3832d,
 		header-font: 'Klee One',
 		header-font-weight: 600,
-		final-score-box-background: rgba(134, 233, 214, 0.2),
+		game-over-background: #F3832D,
+		final-score-box-background: #ffffff,
 	),
 );

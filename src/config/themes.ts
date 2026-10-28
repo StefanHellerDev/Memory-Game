@@ -62,7 +62,7 @@ export const THEMES: Record<ThemeName, ThemeConfig> = {
 		cardsBack: ['./src/assets/img/game_theme/game_card_back.png'],
 		backToGameButton: ['./src/assets/img/game_theme/game_backtogame.png', './src/assets/img/game_theme/game_backtogame_hover.png'],
 		exitButton: ['./src/assets/img/game_theme/game_exit_button.png', './src/assets/img/game_theme/game_exit_button_hover.png'],
-		gameOver: ['./'],
+		gameOver: ['./src/assets/img/game_theme/game_game_over.png'],
 	},
 
 	food: {

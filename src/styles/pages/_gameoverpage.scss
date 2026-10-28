@@ -50,10 +50,16 @@
 			margin-top: 24px;
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
+			justify-content: space-around;
 			width: 323px;
 			height: 62px;
 			background-color: var(--final-score-box-background);
+			font-size: 26px;
+			font-weight: 700;
+
+		  svg {
+			margin-right: 8px;
+		}
 		}
 	}
 
