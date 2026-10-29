@@ -20,6 +20,17 @@
 		--final-score-box-font: #{map.get($colors, final-score-box-font)};
 		--final-score-box-text-size: #{map.get($colors, final-score-box-text-size)};
 		--final-score-box-border-radius: #{map.get($colors, final-score-box-border-radius)};
+		--modal-border-radius: #{map.get($colors, modal-border-radius)};
+		--modal-font-weight: #{map.get($colors, modal-font-weight)};
+		--modal-back-button-background-color: #{map.get($colors, modal-back-button-background-color)};
+		--modal-back-button-text-color: #{map.get($colors, modal-back-button-text-color)};
+		--modal-back-button-border: #{map.get($colors, modal-back-button-border)};
+		--modal-back-button-background-color-hover: #{map.get($colors, modal-back-button-background-color-hover)};
+		--modal-exit-button-background-color: #{map.get($colors, modal-exit-button-background-color)};
+		--modal-exit-button-text-color: #{map.get($colors, modal-exit-button-text-color)};
+		--modal-exit-button-border: #{map.get($colors, modal-exit-button-border)};
+		--modal-exit-button-background-color-hover: #{map.get($colors, modal-exit-button-background-color-hover)};
+		--modal-exit-button-border-hover: #{map.get($colors, modal-exit-button-border-hover)};
 	}
 }
 

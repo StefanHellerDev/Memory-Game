@@ -35,14 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	// showStartPage(); //////////////////////////////////////////// normal start
 
 	///////////////////////////////////////////////// Unnormal start //////////////////////
-	initGamePage(); // start at game page
-	// const settings = getStoredGameSettings();
-	// if (!settings) return;
-	// applyTheme(settings.theme);
-	// const themeConfig = THEMES[settings.theme];
-	// pointsBlue = 7;
-	// pointsOrange = 9;
-	// gameOver(themeConfig);
+	// initGamePage(); // start at game page
+	const settings = getStoredGameSettings();
+	if (!settings) return;
+	applyTheme(settings.theme);
+	const themeConfig = THEMES[settings.theme];
+	pointsBlue = 7;
+	pointsOrange = 9;
+	gameOver(themeConfig);
 });
 
 // *************************
@@ -440,6 +440,8 @@ function initModal(): void {
 		// Modal schließen via Button und Exit Game
 		closeBtnExit.addEventListener('click', (): void => {
 			overlay.classList.remove('active');
+			pointsBlue = 0;
+			pointsOrange = 0;
 			showMainPage();
 		});
 

@@ -40,7 +40,7 @@ export function gamePageTemplate(boardSize: number, themeConfig: ThemeConfig, po
     <!-- Modal Struktur -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
-          Are you sure you want to quit the game?
+          <p>Are you sure you want to quit the game?</p>
 
           <div class="modal-box__button-box">
             <button class="close-btn close-btn__back" id="closeModalBtn">Back to game</button>
