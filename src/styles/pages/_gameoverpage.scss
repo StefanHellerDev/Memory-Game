@@ -17,6 +17,9 @@
 		--game-over-background: #{map.get($colors, game-over-background)};
 		--game-over-text-color: #{map.get($colors, game-over-text-color)};
 		--final-score-box-background: #{map.get($colors, final-score-box-background)};
+		--final-score-box-font: #{map.get($colors, final-score-box-font)};
+		--final-score-box-text-size: #{map.get($colors, final-score-box-text-size)};
+		--final-score-box-border-radius: #{map.get($colors, final-score-box-border-radius)};
 	}
 }
 
@@ -52,40 +55,20 @@
 		&--score-box {
 			margin-top: 24px;
 			display: flex;
+			padding: 0 28px;
 			align-items: center;
-			justify-content: space-around;
-			width: 323px;
+			justify-content: space-between;
+			// width: 323px;
 			height: 62px;
 			background-color: var(--final-score-box-background);
-			font-size: 26px;
+			font-size: var(--final-score-box-text-size);
+			font-family: var(--final-score-box-font);
 			font-weight: 700;
-		}
-	}
+			gap: 40px;
+			border-radius: var(--final-score-box-border-radius);
 
-	&__score-board {
-		font-family: 'Delius Unicase';
-		font-weight: 700;
-		font-size: 30px;
-		padding: 0 16px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 40px;
-		width: 159px;
-		height: 54px;
-		border-radius: 10px;
-		background-color: white;
-
-		&--single-score {
-			display: flex;
-			align-items: center;
-
-			&-orange {
-				color: var(--color-player-orange);
-			}
-
-			&-blue {
-				color: var(--color-player-blue);
+			img {
+				height: 30px;
 			}
 		}
 	}

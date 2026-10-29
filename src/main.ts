@@ -32,17 +32,17 @@ function showMainPage(): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	// showStartPage(); //////////////////////////////////////////// normal start
+	showStartPage(); //////////////////////////////////////////// normal start
 
 	///////////////////////////////////////////////// Unnormal start //////////////////////
 	// initGamePage(); // start at game page
-	const settings = getStoredGameSettings();
-	if (!settings) return;
-	applyTheme(settings.theme);
-	const themeConfig = THEMES[settings.theme];
-	pointsBlue = 7;
-	pointsOrange = 9;
-	gameOver(themeConfig);
+	// const settings = getStoredGameSettings();
+	// if (!settings) return;
+	// applyTheme(settings.theme);
+	// const themeConfig = THEMES[settings.theme];
+	// pointsBlue = 7;
+	// pointsOrange = 9;
+	// gameOver(themeConfig);
 });
 
 // *************************
