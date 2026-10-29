@@ -32,10 +32,10 @@ function showMainPage(): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	showStartPage(); //////////////////////////////////////////// normal start
+	// showStartPage(); //////////////////////////////////////////// normal start
 
 	///////////////////////////////////////////////// Unnormal start //////////////////////
-	// initGamePage(); // start at game page
+	initGamePage(); // start at game page
 	// const settings = getStoredGameSettings();
 	// if (!settings) return;
 	// applyTheme(settings.theme);
@@ -291,6 +291,8 @@ function createGameBoard(boardSize: number, shuffledCards: MemoryCard[], themeCo
 		const card = shuffledCards[i];
 		createSingleCard(gameBoardRef, card, themeConfig);
 	}
+
+	initModal();
 }
 
 function playGame(firstColor: string, boardSize: number, themeConfig: ThemeConfig): void {
@@ -410,6 +412,45 @@ function rotateCardsBack(cardOne: HTMLButtonElement, cardTwo: HTMLButtonElement)
 	cardOne.classList.remove('is-flipped');
 	cardTwo.classList.remove('is-flipped');
 	return;
+}
+
+// *************************
+//        Modal
+// *************************
+
+function initModal(): void {
+	// Elemente mit präzisen Typen aus dem DOM selektieren
+	const openBtn = document.getElementById('openModalBtn');
+	const closeBtn = document.getElementById('closeModalBtn') as HTMLButtonElement | null;
+	const closeBtnExit = document.getElementById('closeModalBtnExit') as HTMLButtonElement | null;
+	const overlay = document.getElementById('modalOverlay') as HTMLDivElement | null;
+
+	// Prüfen, ob alle Elemente existieren, bevor Event-Listener hinzugefügt werden
+	if (openBtn && closeBtn && overlay && closeBtnExit) {
+		// Modal öffnen
+		openBtn.addEventListener('click', (): void => {
+			overlay.classList.add('active');
+		});
+
+		// Modal schließen via Button
+		closeBtn.addEventListener('click', (): void => {
+			overlay.classList.remove('active');
+		});
+
+		// Modal schließen via Button und Exit Game
+		closeBtnExit.addEventListener('click', (): void => {
+			overlay.classList.remove('active');
+			showMainPage();
+		});
+
+		// Modal schließen via Klick auf den abgedunkelten Hintergrund
+		overlay.addEventListener('click', (e: MouseEvent): void => {
+			// e.target wird als HTMLElement typisiert, um auf das Event zuzugreifen
+			if (e.target === overlay) {
+				overlay.classList.remove('active');
+			}
+		});
+	}
 }
 
 // *************************

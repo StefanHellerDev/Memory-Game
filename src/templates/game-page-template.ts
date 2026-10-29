@@ -26,11 +26,29 @@ export function gamePageTemplate(boardSize: number, themeConfig: ThemeConfig, po
             </svg>
           </div>
         </div>
-        <img src="${themeConfig.exitButton[0]}">
+
+        <div id="openModalBtn">
+          <img src="${themeConfig.exitButton[0]}">
+        </div>
+
       </header>
 
       <section class="game-page__board" id="gameBoard" data-board-size="${boardSize}"></section>
     </main>
+
+    
+    <!-- Modal Struktur -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+          Are you sure you want to quit the game?
+
+          <div class="modal-box__button-box">
+            <button class="close-btn close-btn__back" id="closeModalBtn">Back to game</button>
+            <button class="close-btn close-btn__exit" id="closeModalBtnExit">Exit game</button>
+          </div>
+
+        </div>
+    </div>
   `;
 }
 
