@@ -62,6 +62,7 @@
 		&--single-score {
 			display: flex;
 			align-items: center;
+			gap: 8px;
 
 			&-orange {
 				color: var(--color-player-orange);

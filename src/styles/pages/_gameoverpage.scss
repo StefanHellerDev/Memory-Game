@@ -14,16 +14,19 @@
 		--color-draw: #{map.get($colors, draw)};
 		--header-font: #{map.get($colors, header-font)};
 		--header-font-weight: #{map.get($colors, header-font-weight)};
+		--game-over-background: #{map.get($colors, game-over-background)};
+		--game-over-text-color: #{map.get($colors, game-over-text-color)};
 		--final-score-box-background: #{map.get($colors, final-score-box-background)};
 	}
 }
 
 .game-over-page {
-	max-width: 1217px;
+	// max-width: 1217px;
 	width: 100%;
+	height: 100vh;
 	margin: 0 auto;
-	background-color: var(--color-background);
-	color: var(--color-text);
+	background-color: var(--game-over-background);
+	color: var(--game-over-text-color);
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -56,10 +59,6 @@
 			background-color: var(--final-score-box-background);
 			font-size: 26px;
 			font-weight: 700;
-
-		  svg {
-			margin-right: 8px;
-		}
 		}
 	}
 
@@ -88,36 +87,6 @@
 			&-blue {
 				color: var(--color-player-blue);
 			}
-		}
-	}
-
-	&__currentPlayerBox {
-		@include mixin.flex-center(row);
-	}
-
-	&__showActivePlayer {
-		@include mixin.flex-center(row);
-		width: 41px;
-		height: 40px;
-		// background-color: var(--color-player-blue);
-	}
-
-	&__board {
-		display: grid;
-
-		&[data-board-size='16'] {
-			grid-template-columns: repeat(4, 1fr);
-			gap: 16px;
-		}
-
-		&[data-board-size='24'] {
-			grid-template-columns: repeat(6, 1fr);
-			gap: 10px;
-		}
-
-		&[data-board-size='36'] {
-			grid-template-columns: repeat(6, 1fr);
-			gap: 8px;
 		}
 	}
 }
