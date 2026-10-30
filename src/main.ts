@@ -5,6 +5,7 @@ import { startPageTemplate } from './templates/start-page-template';
 import { mainPageTemplate } from './templates/main-page-template';
 import { gamePageTemplate } from './templates/game-page-template';
 import { gameOverPageTemplate } from './templates/game-over-page-template';
+import { winnerPageTemplate } from './templates/winner-page-template';
 import { createSingleCard } from './templates/game-page-template';
 import { ThemeName } from './config/themes';
 
@@ -15,6 +16,11 @@ let pointsOrange = 0;
 const memoryAppRef = document.getElementById('memoryApp');
 if (!memoryAppRef) {
 	throw new Error('Element with id "memoryApp" not found.');
+}
+
+const winnerPageRef = document.getElementById('winnerPage');
+if (!winnerPageRef) {
+	throw new Error('Element with id "winnerPage" not found.');
 }
 
 function showStartPage(): void {
@@ -40,9 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!settings) return;
 	applyTheme(settings.theme);
 	const themeConfig = THEMES[settings.theme];
-	pointsBlue = 7;
-	pointsOrange = 9;
-	gameOver(themeConfig);
+	pointsBlue = 9;
+	pointsOrange = 7;
+	// gameOver(themeConfig);
+	winnerPage(themeConfig);
 });
 
 // *************************
@@ -405,6 +412,8 @@ function checkIfMatchEnds(boardSize: number, themeConfig: ThemeConfig): void {
 		console.log('Game end!!!');
 		gameOver(themeConfig);
 	}
+	console.log('success');
+	winnerPage(themeConfig);
 	return;
 }
 
@@ -462,4 +471,12 @@ function initModal(): void {
 function gameOver(themeConfig: ThemeConfig): void {
 	if (!memoryAppRef) return;
 	memoryAppRef.innerHTML = gameOverPageTemplate(themeConfig, pointsBlue, pointsOrange);
+	setTimeout(() => {
+		return;
+	}, 3000);
+}
+
+function winnerPage(themeConfig: ThemeConfig): void {
+	if (!winnerPageRef) return;
+	winnerPageRef.innerHTML = winnerPageTemplate(themeConfig, pointsBlue, pointsOrange);
 }

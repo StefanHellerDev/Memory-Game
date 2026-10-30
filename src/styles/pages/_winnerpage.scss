@@ -1,0 +1,51 @@
+@use 'sass:map';
+@use '../themes/themes';
+@use '../abstracts/mixin';
+
+@each $theme, $colors in themes.$themes {
+	[data-theme='#{$theme}'] {
+		--color-background: #{map.get($colors, background)};
+		--color-text: #{map.get($colors, text)};
+		--color-player-blue: #{map.get($colors, player-blue)};
+		--color-player-orange: #{map.get($colors, player-orange)};
+		--color-background-header-box: #{map.get($colors, background-header-box)};
+		--color-game-over-text: #{map.get($colors, game-over-text)};
+		--color-game-over-bg: #{map.get($colors, game-over-bg)};
+		--color-draw: #{map.get($colors, draw)};
+		--header-font: #{map.get($colors, header-font)};
+		--header-font-weight: #{map.get($colors, header-font-weight)};
+		--game-over-background: #{map.get($colors, game-over-background)};
+		--game-over-text-color: #{map.get($colors, game-over-text-color)};
+		--final-score-box-background: #{map.get($colors, final-score-box-background)};
+		--final-score-box-font: #{map.get($colors, final-score-box-font)};
+		--final-score-box-text-size: #{map.get($colors, final-score-box-text-size)};
+		--final-score-box-border-radius: #{map.get($colors, final-score-box-border-radius)};
+		--modal-border-radius: #{map.get($colors, modal-border-radius)};
+		--modal-font-weight: #{map.get($colors, modal-font-weight)};
+		--modal-back-button-background-color: #{map.get($colors, modal-back-button-background-color)};
+		--modal-back-button-text-color: #{map.get($colors, modal-back-button-text-color)};
+		--modal-back-button-border: #{map.get($colors, modal-back-button-border)};
+		--modal-back-button-background-color-hover: #{map.get($colors, modal-back-button-background-color-hover)};
+		--modal-exit-button-background-color: #{map.get($colors, modal-exit-button-background-color)};
+		--modal-exit-button-text-color: #{map.get($colors, modal-exit-button-text-color)};
+		--modal-exit-button-border: #{map.get($colors, modal-exit-button-border)};
+		--modal-exit-button-background-color-hover: #{map.get($colors, modal-exit-button-background-color-hover)};
+		--modal-exit-button-border-hover: #{map.get($colors, modal-exit-button-border-hover)};
+	}
+}
+
+.winner-page {
+	// max-width: 1217px;
+	width: 100%;
+	height: 100vh;
+	margin: 0 auto;
+	background-color: var(--game-over-background);
+	color: var(--game-over-text-color);
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+
+	&__confetti {
+		width: 1217px;
+	}
+}

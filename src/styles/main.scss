@@ -6,6 +6,7 @@
 @use './pages/mainpage';
 @use './pages/gamepage';
 @use './pages/gameoverpage';
+@use './pages/winnerpage';
 
 body {
 	background-color: var(--color-background);
