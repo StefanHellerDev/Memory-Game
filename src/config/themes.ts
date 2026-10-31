@@ -8,6 +8,7 @@ export interface ThemeConfig {
 	gameOver: string[];
 	winnerText: string[];
 	winnerPicture: string[];
+	winnerBackToStart: string[];
 }
 
 export const THEMES: Record<ThemeName, ThemeConfig> = {
@@ -51,6 +52,7 @@ export const THEMES: Record<ThemeName, ThemeConfig> = {
 			'./src/assets/img/code_vibes_theme/Code_vibes_winner_orange_Player.png',
 			'./src/assets/img/code_vibes_theme/Code_vibes_draw_Scale.png',
 		],
+		winnerBackToStart: ['./src/assets/img/code_vibes_theme/Code_vibes_BackToStart.png'],
 	},
 
 	game: {
@@ -79,8 +81,17 @@ export const THEMES: Record<ThemeName, ThemeConfig> = {
 		backToGameButton: ['./src/assets/img/game_theme/game_backtogame.png', './src/assets/img/game_theme/game_backtogame_hover.png'],
 		exitButton: ['./src/assets/img/game_theme/game_exit_button.png', './src/assets/img/game_theme/game_exit_button_hover.png'],
 		gameOver: ['./src/assets/img/game_theme/game_game_over.png', './src/assets/img/chess_blue.png', './src/assets/img/chess_orange.png'],
-		winnerText: ['./', './', './'],
-		winnerPicture: ['./', './', './'],
+		winnerText: [
+			'./src/assets/img/game_theme/game_winner_blue_Text.png',
+			'./src/assets/img/game_theme/game_winner_orange_Text.png',
+			'./src/assets/img/game_theme/game_draw_Text.png',
+		],
+		winnerPicture: [
+			'./src/assets/img/game_theme/game_pokal.png',
+			'./src/assets/img/game_theme/game_pokal.png',
+			'./src/assets/img/game_theme/game_draw_Scale.png',
+		],
+		winnerBackToStart: ['./src/assets/img/game_theme/game_BackToStart.png'],
 	},
 
 	food: {
@@ -109,7 +120,16 @@ export const THEMES: Record<ThemeName, ThemeConfig> = {
 		backToGameButton: ['./src/assets/img/food_theme/food_backtogame.png', './src/assets/img/food_theme/food_backtogame_hover.png'],
 		exitButton: ['./src/assets/img/food_theme/food_exit_button.png', './src/assets/img/food_theme/food_exit_button_hover.png'],
 		gameOver: ['./src/assets/img/food_theme/food_game_over.png', './src/assets/img/chess_blue.png', './src/assets/img/chess_orange.png'],
-		winnerText: ['./', './', './'],
-		winnerPicture: ['./', './', './'],
+		winnerText: [
+			'./src/assets/img/food_theme/food_winner_blue_Text.png',
+			'./src/assets/img/food_theme/food_winner_orange_Text.png',
+			'./src/assets/img/food_theme/food_draw_Text.png',
+		],
+		winnerPicture: [
+			'./src/assets/img/food_theme/food_winner_blue_Player.png',
+			'./src/assets/img/food_theme/food_winner_orange_Player.png',
+			'./src/assets/img/food_theme/food_draw_Scale.png',
+		],
+		winnerBackToStart: ['./src/assets/img/food_theme/food_BackToStart.png'],
 	},
 };

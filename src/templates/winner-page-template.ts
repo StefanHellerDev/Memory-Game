@@ -7,12 +7,21 @@ export function winnerPageTemplate(themeConfig: ThemeConfig, pointsBlue: number,
 	} else if (pointsBlue < pointsOrange) {
 		index = 1;
 	}
+
 	return `
-    <main class="winner-page">
-    
-    <img class="winner-page__confetti" src="./src/assets/img/code_vibes_theme/Code_vibes_confetti.png">
-    <img src="${themeConfig.winnerText[index]}">
-    <img src="${themeConfig.winnerPicture[index]}">
+    <main class="winner-page page-slide-in">
+
+    <div class="winner-page__confetti">
+			<img class="d_none" id="confetti" src="./src/assets/img/code_vibes_theme/Code_vibes_confetti.png">
+		</div>
+
+		<div class="winner-page__display">
+	    <img class="winner-page__display--text" src="${themeConfig.winnerText[index]}">
+  	  <img class="winner-page__display--picture" src="${themeConfig.winnerPicture[index]}">
+			<div class="winner-page__display--winnerBackToStart" id="winnerBackToStartBtn">
+  	  	<img src="${themeConfig.winnerBackToStart}">
+			</div>
+		</div>
 
     </main>
   `;

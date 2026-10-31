@@ -36,16 +36,61 @@
 
 .winner-page {
 	// max-width: 1217px;
-	width: 100%;
-	height: 100vh;
+	// width: 100%;
+	// height: 100vh;
 	margin: 0 auto;
-	background-color: var(--game-over-background);
+	background-color: var(--color-background);
 	color: var(--game-over-text-color);
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 
 	&__confetti {
-		width: 1217px;
+		position: relative;
+		top: -30px;
+		height: 331px;
+		// width: 1217px;
+		// width: auto;
+		// object-fit: contain;
+	}
+
+	&__display {
+		position: relative;
+		top: -100px;
+		// height: 573px;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+
+		&--text {
+			height: 133px;
+			// width: auto;
+			object-fit: contain;
+		}
+
+		&--picture {
+			height: 250px;
+			// width: auto;
+			object-fit: contain;
+		}
+
+		&--winnerBackToStart {
+			cursor: pointer;
+			margin-top: 32px;
+		}
+	}
+}
+
+.page-slide-in {
+	animation: slide-in-from-top 500ms ease-out;
+}
+
+@keyframes slide-in-from-top {
+	from {
+		transform: translateY(-100vh);
+	}
+
+	to {
+		transform: translateY(0);
 	}
 }

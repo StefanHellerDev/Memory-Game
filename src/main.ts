@@ -38,18 +38,18 @@ function showMainPage(): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	// showStartPage(); //////////////////////////////////////////// normal start
+	showStartPage(); //////////////////////////////////////////// normal start
 
 	///////////////////////////////////////////////// Unnormal start //////////////////////
 	// initGamePage(); // start at game page
-	const settings = getStoredGameSettings();
-	if (!settings) return;
-	applyTheme(settings.theme);
-	const themeConfig = THEMES[settings.theme];
-	pointsBlue = 9;
-	pointsOrange = 7;
-	// gameOver(themeConfig);
-	winnerPage(themeConfig);
+	// const settings = getStoredGameSettings();
+	// if (!settings) return;
+	// applyTheme(settings.theme);
+	// const themeConfig = THEMES[settings.theme];
+	// pointsBlue = 9;
+	// pointsOrange = 7;
+	// // gameOver(themeConfig);
+	// winnerPage(themeConfig);
 });
 
 // *************************
@@ -413,7 +413,6 @@ function checkIfMatchEnds(boardSize: number, themeConfig: ThemeConfig): void {
 		gameOver(themeConfig);
 	}
 	console.log('success');
-	winnerPage(themeConfig);
 	return;
 }
 
@@ -472,11 +471,32 @@ function gameOver(themeConfig: ThemeConfig): void {
 	if (!memoryAppRef) return;
 	memoryAppRef.innerHTML = gameOverPageTemplate(themeConfig, pointsBlue, pointsOrange);
 	setTimeout(() => {
-		return;
+		winnerPage(themeConfig);
 	}, 3000);
 }
 
 function winnerPage(themeConfig: ThemeConfig): void {
+	if (!memoryAppRef) return;
+	memoryAppRef.innerHTML = '';
 	if (!winnerPageRef) return;
 	winnerPageRef.innerHTML = winnerPageTemplate(themeConfig, pointsBlue, pointsOrange);
+	const confettiRef = document.getElementById('confetti');
+	console.log(themeConfig.name);
+
+	if (confettiRef) {
+		if ((pointsBlue > pointsOrange || pointsBlue < pointsOrange) && themeConfig.name == 'Code Vibes') {
+			console.log("remove('d_none')");
+			
+			confettiRef.classList.remove('d_none');
+		}
+	}
+
+	const backToStartBtn = document.getElementById('winnerBackToStartBtn') as HTMLButtonElement | null;
+	if (!backToStartBtn) return;
+	backToStartBtn.addEventListener('click', (): void => {
+		pointsBlue = 0;
+		pointsOrange = 0;
+		winnerPageRef.innerHTML = '';
+		showMainPage();
+	});
 }
