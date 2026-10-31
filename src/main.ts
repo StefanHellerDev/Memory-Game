@@ -9,7 +9,7 @@ import { winnerPageTemplate } from './templates/winner-page-template';
 import { createSingleCard } from './templates/game-page-template';
 import { ThemeName } from './config/themes';
 
-let activePlayer: string; // blue or orange
+let activePlayer: string;
 let pointsBlue = 0;
 let pointsOrange = 0;
 
@@ -38,18 +38,7 @@ function showMainPage(): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	showStartPage(); //////////////////////////////////////////// normal start
-
-	///////////////////////////////////////////////// Unnormal start //////////////////////
-	// initGamePage(); // start at game page
-	// const settings = getStoredGameSettings();
-	// if (!settings) return;
-	// applyTheme(settings.theme);
-	// const themeConfig = THEMES[settings.theme];
-	// pointsBlue = 9;
-	// pointsOrange = 7;
-	// // gameOver(themeConfig);
-	// winnerPage(themeConfig);
+	showStartPage();
 });
 
 // *************************
@@ -63,81 +52,144 @@ function initSettingsPage(): void {
 	initStartButton();
 }
 
-function initThemeInputs() {
+function initThemeInputs(): void {
 	const themePreview = document.getElementById('theme-preview') as HTMLImageElement | null;
 	const themeInputs = document.querySelectorAll<HTMLInputElement>('input[name="gameTheme"]');
 	const displayGameTheme = document.getElementById('displayGameTheme');
 	let selectedThemeSrc = getSelectedThemeSrc();
 
 	themeInputs.forEach((input) => {
-		const label = input.closest('label');
-
-		label?.addEventListener('mouseenter', () => {
-			if (!themePreview || !input.dataset.previewSrc) return;
-			themePreview.src = input.dataset.previewSrc;
-		});
-
-		label?.addEventListener('mouseleave', () => {
-			if (!themePreview) return;
-			themePreview.src = selectedThemeSrc;
-		});
-
-		input.addEventListener('change', () => {
-			const previewSrc = input.dataset.previewSrc;
-			const themeChoice = input.dataset.themeChoice;
-
-			if (!previewSrc || !themeChoice) return;
-
-			selectedThemeSrc = previewSrc;
-
-			if (displayGameTheme) {
-				displayGameTheme.innerText = themeChoice;
-				animateSelection(displayGameTheme);
-			}
-
-			if (themePreview) themePreview.src = previewSrc;
-
-			updateStartButtonState();
-		});
+		bindThemeInput(
+			input,
+			themePreview,
+			displayGameTheme,
+			() => selectedThemeSrc,
+			(src) => (selectedThemeSrc = src),
+		);
 	});
 }
 
-function initPlayerInputs() {
+function bindThemeInput(
+	input: HTMLInputElement,
+	themePreview: HTMLImageElement | null,
+	displayGameTheme: HTMLElement | null,
+	getSelectedSrc: () => string,
+	setSelectedSrc: (src: string) => void,
+): void {
+	bindThemeHover(input, themePreview, getSelectedSrc);
+	bindThemeChange(input, themePreview, displayGameTheme, setSelectedSrc);
+}
+
+function bindThemeHover(input: HTMLInputElement, themePreview: HTMLImageElement | null, getSelectedSrc: () => string): void {
+	const label = input.closest('label');
+	if (!label) return;
+
+	label.addEventListener('mouseenter', () => showThemePreview(input, themePreview));
+	label.addEventListener('mouseleave', () => resetThemePreview(themePreview, getSelectedSrc()));
+}
+
+function showThemePreview(input: HTMLInputElement, themePreview: HTMLImageElement | null): void {
+	if (!themePreview || !input.dataset.previewSrc) return;
+	themePreview.src = input.dataset.previewSrc;
+}
+
+function resetThemePreview(themePreview: HTMLImageElement | null, selectedThemeSrc: string): void {
+	if (!themePreview) return;
+	themePreview.src = selectedThemeSrc;
+}
+
+function bindThemeChange(
+	input: HTMLInputElement,
+	themePreview: HTMLImageElement | null,
+	displayGameTheme: HTMLElement | null,
+	setSelectedSrc: (src: string) => void,
+): void {
+	input.addEventListener('change', () => {
+		handleThemeChange(input, themePreview, displayGameTheme, setSelectedSrc);
+	});
+}
+
+function handleThemeChange(
+	input: HTMLInputElement,
+	themePreview: HTMLImageElement | null,
+	displayGameTheme: HTMLElement | null,
+	setSelectedSrc: (src: string) => void,
+): void {
+	const previewSrc = input.dataset.previewSrc;
+	const themeChoice = input.dataset.themeChoice;
+	if (!previewSrc || !themeChoice) return;
+
+	setSelectedSrc(previewSrc);
+	updateThemeDisplay(themePreview, displayGameTheme, previewSrc, themeChoice);
+	updateStartButtonState();
+}
+
+function updateThemeDisplay(themePreview: HTMLImageElement | null, displayGameTheme: HTMLElement | null, previewSrc: string, themeChoice: string): void {
+	if (themePreview) themePreview.src = previewSrc;
+	if (!displayGameTheme) return;
+
+	displayGameTheme.innerText = themeChoice;
+	animateSelection(displayGameTheme);
+}
+
+function initPlayerInputs(): void {
 	const playerInputs = document.querySelectorAll<HTMLInputElement>('input[name="player"]');
 	const displayPlayer = document.getElementById('displayPlayer');
 
 	playerInputs.forEach((input) => {
-		input.addEventListener('change', () => {
-			const playerChoice = input.dataset.playerChoice;
-
-			if (!playerChoice) return;
-
-			if (displayPlayer) {
-				displayPlayer.innerText = playerChoice;
-				animateSelection(displayPlayer);
-			}
-			updateStartButtonState();
-		});
+		bindPlayerInput(input, displayPlayer);
 	});
 }
 
-function initBoardSizeInputs() {
+function bindPlayerInput(input: HTMLInputElement, displayPlayer: HTMLElement | null): void {
+	input.addEventListener('change', () => {
+		handlePlayerChange(input, displayPlayer);
+	});
+}
+
+function handlePlayerChange(input: HTMLInputElement, displayPlayer: HTMLElement | null): void {
+	const playerChoice = input.dataset.playerChoice;
+	if (!playerChoice) return;
+
+	updatePlayerDisplay(displayPlayer, playerChoice);
+	updateStartButtonState();
+}
+
+function updatePlayerDisplay(displayPlayer: HTMLElement | null, playerChoice: string): void {
+	if (!displayPlayer) return;
+
+	displayPlayer.innerText = playerChoice;
+	animateSelection(displayPlayer);
+}
+
+function initBoardSizeInputs(): void {
 	const boardSizeInputs = document.querySelectorAll<HTMLInputElement>('input[name="boardSize"]');
 	const displayBoardSize = document.getElementById('displayBoardSize');
 
 	boardSizeInputs.forEach((input) => {
-		input.addEventListener('change', () => {
-			const boardSizeChoice = input.dataset.boardSizeChoice;
-
-			if (!boardSizeChoice) return;
-
-			if (displayBoardSize) {
-				displayBoardSize.innerText = boardSizeChoice;
-				animateSelection(displayBoardSize);
-			}
-			updateStartButtonState();
-		});
+		bindBoardSizeInput(input, displayBoardSize);
 	});
+}
+
+function bindBoardSizeInput(input: HTMLInputElement, displayBoardSize: HTMLElement | null): void {
+	input.addEventListener('change', () => {
+		handleBoardSizeChange(input, displayBoardSize);
+	});
+}
+
+function handleBoardSizeChange(input: HTMLInputElement, displayBoardSize: HTMLElement | null): void {
+	const boardSizeChoice = input.dataset.boardSizeChoice;
+	if (!boardSizeChoice) return;
+
+	updateBoardSizeDisplay(displayBoardSize, boardSizeChoice);
+	updateStartButtonState();
+}
+
+function updateBoardSizeDisplay(displayBoardSize: HTMLElement | null, boardSizeChoice: string): void {
+	if (!displayBoardSize) return;
+
+	displayBoardSize.innerText = boardSizeChoice;
+	animateSelection(displayBoardSize);
 }
 
 function getSelectedThemeSrc(): string {
@@ -175,9 +227,7 @@ function updateStartButton(allSelected: boolean): void {
 
 function updateProgressLines(allSelected: boolean): void {
 	const lines = document.querySelectorAll<HTMLImageElement>('.settings-progress-line');
-
 	const src = allSelected ? './src/assets/img/settings-page-line-after.svg' : './src/assets/img/settings-page-line-before.svg';
-
 	lines.forEach((line) => {
 		line.src = src;
 	});
@@ -185,13 +235,9 @@ function updateProgressLines(allSelected: boolean): void {
 
 function getSelectedGameSettings() {
 	const theme = document.querySelector<HTMLInputElement>('input[name="gameTheme"]:checked');
-
 	const player = document.querySelector<HTMLInputElement>('input[name="player"]:checked');
-
 	const boardSize = document.querySelector<HTMLInputElement>('input[name="boardSize"]:checked');
-
 	if (!theme || !player || !boardSize) return null;
-
 	return {
 		theme: theme.value,
 		player: player.value,
@@ -201,18 +247,14 @@ function getSelectedGameSettings() {
 
 function initStartButton(): void {
 	const startButton = document.getElementById('startButton') as HTMLButtonElement | null;
-
 	if (!startButton) return;
-
 	startButton.addEventListener('click', saveSettingsAndStartGame);
 }
 
 function saveSettingsAndStartGame(): void {
 	const settings = getSelectedGameSettings();
 	if (!settings) return;
-
 	sessionStorage.setItem('gameSettings', JSON.stringify(settings));
-
 	initGamePage();
 }
 
@@ -235,17 +277,13 @@ export interface MemoryCard {
 function initGamePage(): void {
 	const settings = getStoredGameSettings();
 	if (!settings) return;
-
 	applyTheme(settings.theme);
-
 	const themeConfig = THEMES[settings.theme];
 	const pairCount = settings.boardSize / 2;
 	const selectedCards = themeConfig.cards.slice(0, pairCount);
 	const cardPairs = createCardPairs(selectedCards);
 	const shuffledCards = shuffleCards(cardPairs);
-
 	createGameBoard(settings.boardSize, shuffledCards, themeConfig);
-
 	playGame(settings.player, settings.boardSize, themeConfig);
 }
 
@@ -320,64 +358,114 @@ function setCurrentPlayerColor(activePlayer: string): void {
 	}
 }
 
-function clickAndRotateCard(boardSize: number, themeConfig: ThemeConfig): void {
-	let firstCard: HTMLButtonElement | null = null;
-	let secondCard: HTMLButtonElement | null = null;
-	let isCheckingCards = false;
+interface CardState {
+	firstCard: HTMLButtonElement | null;
+	secondCard: HTMLButtonElement | null;
+	isCheckingCards: boolean;
+}
 
+function clickAndRotateCard(boardSize: number, themeConfig: ThemeConfig): void {
 	const fieldRef = document.getElementById('gameBoard');
 	if (!fieldRef) return;
 
-	fieldRef.addEventListener('click', (e) => {
-		if (isCheckingCards) return;
-		const target = e.target as HTMLElement;
-		const clickedCard = target.closest<HTMLButtonElement>('.memory-card');
-		if (!clickedCard) return;
-		if (clickedCard.classList.contains('is-matched')) return;
+	const state: CardState = {
+		firstCard: null,
+		secondCard: null,
+		isCheckingCards: false,
+	};
 
-		clickedCard.classList.toggle('is-flipped');
-
-		if (!firstCard) {
-			firstCard = clickedCard;
-			return;
-		}
-
-		if (clickedCard === firstCard) return;
-
-		secondCard = clickedCard;
-
-		if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
-			console.log('Pair found!');
-			addOnePointToActivePlayer();
-			firstCard.classList.add('is-matched');
-			secondCard.classList.add('is-matched');
-			checkIfMatchEnds(boardSize, themeConfig);
-		} else {
-			console.log('No match!');
-			isCheckingCards = true;
-			const cardOne = firstCard;
-			const cardTwo = secondCard;
-			setTimeout(() => {
-				rotateCardsBack(cardOne, cardTwo);
-				firstCard = null;
-				secondCard = null;
-				isCheckingCards = false;
-			}, 1000);
-
-			if (activePlayer == 'blue') {
-				activePlayer = 'orange';
-				setCurrentPlayerColor(activePlayer);
-			} else if (activePlayer == 'orange') {
-				activePlayer = 'blue';
-				setCurrentPlayerColor(activePlayer);
-			}
-		}
-
-		firstCard = null;
-		secondCard = null;
+	fieldRef.addEventListener('click', (event) => {
+		handleCardClick(event, state, boardSize, themeConfig);
 	});
+}
 
-	return;
+function handleCardClick(event: MouseEvent, state: CardState, boardSize: number, themeConfig: ThemeConfig): void {
+	if (state.isCheckingCards) return;
+
+	const clickedCard = getClickedCard(event);
+	if (!clickedCard || isInvalidCard(clickedCard, state)) return;
+
+	clickedCard.classList.add('is-flipped');
+	handleSelectedCard(clickedCard, state, boardSize, themeConfig);
+}
+
+function getClickedCard(event: MouseEvent): HTMLButtonElement | null {
+	const target = event.target as HTMLElement;
+
+	return target.closest<HTMLButtonElement>('.memory-card');
+}
+
+function isInvalidCard(card: HTMLButtonElement, state: CardState): boolean {
+	if (card.classList.contains('is-matched')) return true;
+	return card === state.firstCard;
+}
+
+function handleSelectedCard(card: HTMLButtonElement, state: CardState, boardSize: number, themeConfig: ThemeConfig): void {
+	if (!state.firstCard) {
+		state.firstCard = card;
+		return;
+	}
+
+	state.secondCard = card;
+	checkSelectedCards(state, boardSize, themeConfig);
+}
+
+function checkSelectedCards(state: CardState, boardSize: number, themeConfig: ThemeConfig): void {
+	if (!state.firstCard || !state.secondCard) return;
+
+	if (cardsMatch(state.firstCard, state.secondCard)) {
+		handleMatchingCards(state, boardSize, themeConfig);
+	} else {
+		handleNonMatchingCards(state);
+	}
+}
+
+function cardsMatch(firstCard: HTMLButtonElement, secondCard: HTMLButtonElement): boolean {
+	return firstCard.dataset.pairId === secondCard.dataset.pairId;
+}
+
+function handleMatchingCards(state: CardState, boardSize: number, themeConfig: ThemeConfig): void {
+	if (!state.firstCard || !state.secondCard) return;
+
+	state.firstCard.classList.add('is-matched');
+	state.secondCard.classList.add('is-matched');
+	addOnePointToActivePlayer();
+	checkIfMatchEnds(boardSize, themeConfig);
+	resetSelectedCards(state);
+}
+
+function handleNonMatchingCards(state: CardState): void {
+	if (!state.firstCard || !state.secondCard) return;
+
+	const cardOne = state.firstCard;
+	const cardTwo = state.secondCard;
+	state.isCheckingCards = true;
+
+	switchActivePlayer();
+	resetCardsAfterDelay(cardOne, cardTwo, state);
+}
+
+function resetCardsAfterDelay(cardOne: HTMLButtonElement, cardTwo: HTMLButtonElement, state: CardState): void {
+	setTimeout(() => {
+		rotateCardsBack(cardOne, cardTwo);
+		resetSelectedCards(state);
+		state.isCheckingCards = false;
+	}, 1000);
+}
+
+function switchActivePlayer(): void {
+	if (activePlayer === 'blue') {
+		activePlayer = 'orange';
+	} else {
+		activePlayer = 'blue';
+	}
+
+	setCurrentPlayerColor(activePlayer);
+}
+
+function resetSelectedCards(state: CardState): void {
+	state.firstCard = null;
+	state.secondCard = null;
 }
 
 function addOnePointToActivePlayer(): void {
@@ -409,17 +497,14 @@ function updateScoreBoard(activePlayer: string): void {
 
 function checkIfMatchEnds(boardSize: number, themeConfig: ThemeConfig): void {
 	if (boardSize / 2 == pointsBlue + pointsOrange) {
-		console.log('Game end!!!');
 		gameOver(themeConfig);
 	}
-	console.log('success');
 	return;
 }
 
 function rotateCardsBack(cardOne: HTMLButtonElement, cardTwo: HTMLButtonElement): void {
 	cardOne.classList.remove('is-flipped');
 	cardTwo.classList.remove('is-flipped');
-	return;
 }
 
 // *************************
@@ -427,40 +512,50 @@ function rotateCardsBack(cardOne: HTMLButtonElement, cardTwo: HTMLButtonElement)
 // *************************
 
 function initModal(): void {
-	// Elemente mit präzisen Typen aus dem DOM selektieren
 	const openBtn = document.getElementById('openModalBtn');
-	const closeBtn = document.getElementById('closeModalBtn') as HTMLButtonElement | null;
-	const closeBtnExit = document.getElementById('closeModalBtnExit') as HTMLButtonElement | null;
-	const overlay = document.getElementById('modalOverlay') as HTMLDivElement | null;
+	const closeBtn = document.getElementById('closeModalBtn');
+	const closeBtnExit = document.getElementById('closeModalBtnExit');
+	const overlay = document.getElementById('modalOverlay');
 
-	// Prüfen, ob alle Elemente existieren, bevor Event-Listener hinzugefügt werden
-	if (openBtn && closeBtn && overlay && closeBtnExit) {
-		// Modal öffnen
-		openBtn.addEventListener('click', (): void => {
-			overlay.classList.add('active');
-		});
+	if (!openBtn || !closeBtn || !closeBtnExit || !overlay) return;
 
-		// Modal schließen via Button
-		closeBtn.addEventListener('click', (): void => {
+	bindOpenModal(openBtn, overlay);
+	bindCloseModal(closeBtn, overlay);
+	bindExitModal(closeBtnExit, overlay);
+	bindOverlayClose(overlay);
+}
+
+function bindOpenModal(openBtn: HTMLElement, overlay: HTMLElement): void {
+	openBtn.addEventListener('click', () => {
+		overlay.classList.add('active');
+	});
+}
+
+function bindCloseModal(closeBtn: HTMLElement, overlay: HTMLElement): void {
+	closeBtn.addEventListener('click', () => {
+		overlay.classList.remove('active');
+	});
+}
+
+function bindExitModal(closeBtnExit: HTMLElement, overlay: HTMLElement): void {
+	closeBtnExit.addEventListener('click', () => {
+		closeGameModal(overlay);
+	});
+}
+
+function closeGameModal(overlay: HTMLElement): void {
+	overlay.classList.remove('active');
+	pointsBlue = 0;
+	pointsOrange = 0;
+	showMainPage();
+}
+
+function bindOverlayClose(overlay: HTMLElement): void {
+	overlay.addEventListener('click', (event: MouseEvent) => {
+		if (event.target === overlay) {
 			overlay.classList.remove('active');
-		});
-
-		// Modal schließen via Button und Exit Game
-		closeBtnExit.addEventListener('click', (): void => {
-			overlay.classList.remove('active');
-			pointsBlue = 0;
-			pointsOrange = 0;
-			showMainPage();
-		});
-
-		// Modal schließen via Klick auf den abgedunkelten Hintergrund
-		overlay.addEventListener('click', (e: MouseEvent): void => {
-			// e.target wird als HTMLElement typisiert, um auf das Event zuzugreifen
-			if (e.target === overlay) {
-				overlay.classList.remove('active');
-			}
-		});
-	}
+		}
+	});
 }
 
 // *************************
@@ -476,27 +571,43 @@ function gameOver(themeConfig: ThemeConfig): void {
 }
 
 function winnerPage(themeConfig: ThemeConfig): void {
-	if (!memoryAppRef) return;
-	memoryAppRef.innerHTML = '';
-	if (!winnerPageRef) return;
-	winnerPageRef.innerHTML = winnerPageTemplate(themeConfig, pointsBlue, pointsOrange);
-	const confettiRef = document.getElementById('confetti');
-	console.log(themeConfig.name);
+	if (!memoryAppRef || !winnerPageRef) return;
 
-	if (confettiRef) {
-		if ((pointsBlue > pointsOrange || pointsBlue < pointsOrange) && themeConfig.name == 'Code Vibes') {
-			console.log("remove('d_none')");
-			
-			confettiRef.classList.remove('d_none');
-		}
+	memoryAppRef.innerHTML = '';
+	winnerPageRef.innerHTML = winnerPageTemplate(themeConfig, pointsBlue, pointsOrange);
+
+	showConfettiIfNeeded(themeConfig);
+	initWinnerBackButton();
+}
+
+function showConfettiIfNeeded(themeConfig: ThemeConfig): void {
+	const confettiRef = document.getElementById('confetti');
+	if (!confettiRef) return;
+
+	const hasWinner = pointsBlue !== pointsOrange;
+	const isCodeVibes = themeConfig.name === 'Code Vibes';
+
+	if (hasWinner && isCodeVibes) {
+		confettiRef.classList.remove('d_none');
+	}
+}
+
+function initWinnerBackButton(): void {
+	const backButton = document.getElementById('winnerBackToStartBtn');
+	if (!backButton) return;
+
+	backButton.addEventListener('click', () => {
+		resetGameAndShowMainPage();
+	});
+}
+
+function resetGameAndShowMainPage(): void {
+	pointsBlue = 0;
+	pointsOrange = 0;
+
+	if (winnerPageRef) {
+		winnerPageRef.innerHTML = '';
 	}
 
-	const backToStartBtn = document.getElementById('winnerBackToStartBtn') as HTMLButtonElement | null;
-	if (!backToStartBtn) return;
-	backToStartBtn.addEventListener('click', (): void => {
-		pointsBlue = 0;
-		pointsOrange = 0;
-		winnerPageRef.innerHTML = '';
-		showMainPage();
-	});
+	showMainPage();
 }
