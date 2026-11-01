@@ -1,5 +1,5 @@
 import { ThemeConfig } from '../config/themes';
-import { MemoryCard } from '../main';
+import { MemoryCard } from '../types/game-types';
 
 export function gamePageTemplate(boardSize: number, themeConfig: ThemeConfig, pointsBlue: number, pointsOrange: number) {
 	return `
