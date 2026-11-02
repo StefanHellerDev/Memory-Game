@@ -1,4 +1,5 @@
 import { ThemeConfig } from '../config/themes';
+import confettiPic from '../assets/img/code_vibes_theme/Code_vibes_confetti.png';
 
 export function winnerPageTemplate(themeConfig: ThemeConfig, pointsBlue: number, pointsOrange: number) {
 	let index = 2;
@@ -12,7 +13,7 @@ export function winnerPageTemplate(themeConfig: ThemeConfig, pointsBlue: number,
     <main class="winner-page page-slide-in">
 
     <div class="winner-page__confetti">
-			<img class="d_none" id="confetti" src="./src/assets/img/code_vibes_theme/Code_vibes_confetti.png">
+			<img class="d_none" id="confetti" src="${confettiPic}">
 		</div>
 
 		<div class="winner-page__display">

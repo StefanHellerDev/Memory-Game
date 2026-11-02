@@ -4,6 +4,9 @@
 
 import { mainPageTemplate } from '../templates/main-page-template';
 import { initGamePage } from '../pages/game-page';
+import settingsLineBefore from '../assets/img/settings-page-line-before.svg';
+import settingsLineAfter from '../assets/img/settings-page-line-after.svg';
+import themeVisualCodeVibes from '../assets/img/code_vibes_theme/theme_visual-code_vibes.png';
 
 const memoryAppRef = document.getElementById('memoryApp');
 if (!memoryAppRef) {
@@ -166,7 +169,7 @@ function updateBoardSizeDisplay(displayBoardSize: HTMLElement | null, boardSizeC
 function getSelectedThemeSrc(): string {
 	const checkedInput = document.querySelector<HTMLInputElement>('input[name="gameTheme"]:checked');
 
-	return checkedInput?.dataset.previewSrc || './src/assets/img/code_vibes_theme/theme_visual-code_vibes.png';
+	return checkedInput?.dataset.previewSrc || themeVisualCodeVibes;
 }
 
 function animateSelection(element: HTMLElement): void {
@@ -198,7 +201,7 @@ function updateStartButton(allSelected: boolean): void {
 
 function updateProgressLines(allSelected: boolean): void {
 	const lines = document.querySelectorAll<HTMLImageElement>('.settings-progress-line');
-	const src = allSelected ? './src/assets/img/settings-page-line-after.svg' : './src/assets/img/settings-page-line-before.svg';
+	const src = allSelected ? settingsLineAfter : settingsLineBefore;
 	lines.forEach((line) => {
 		line.src = src;
 	});
