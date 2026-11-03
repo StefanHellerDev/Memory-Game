@@ -1,8 +1,18 @@
 import { ThemeConfig } from '../config/themes';
-import confettiPic from '../assets/img/code_vibes_theme/Code_vibes_confetti.png';
+import confettiPic from '../assets/img/code_vibes_theme/Code_vibes_confetti.svg';
 
+/**
+ * Creates the winner page markup based on the final scores
+ * and the selected theme configuration.
+ *
+ * @param themeConfig - The configuration of the selected game theme.
+ * @param pointsBlue - The final score of the blue player.
+ * @param pointsOrange - The final score of the orange player.
+ * @returns The HTML markup for the winner page.
+ */
 export function winnerPageTemplate(themeConfig: ThemeConfig, pointsBlue: number, pointsOrange: number) {
 	let index = 2;
+
 	if (pointsBlue > pointsOrange) {
 		index = 0;
 	} else if (pointsBlue < pointsOrange) {

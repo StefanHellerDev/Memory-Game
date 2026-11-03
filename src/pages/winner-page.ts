@@ -1,7 +1,3 @@
-// *************************
-//        Game OVER
-// *************************
-
 import { ThemeConfig } from '../config/themes';
 import { gameOverPageTemplate } from '../templates/game-over-page-template';
 import { winnerPageTemplate } from '../templates/winner-page-template';
@@ -18,14 +14,27 @@ if (!winnerPageRef) {
 	throw new Error('Element with id "winnerPage" not found.');
 }
 
+/**
+ * Displays the game-over page and switches to the winner page after a short delay.
+ *
+ * @param themeConfig - The configuration of the selected theme.
+ */
 export function gameOver(themeConfig: ThemeConfig): void {
 	if (!memoryAppRef) return;
+
 	memoryAppRef.innerHTML = gameOverPageTemplate(themeConfig, gameState.pointsBlue, gameState.pointsOrange);
+
 	setTimeout(() => {
 		winnerPage(themeConfig);
 	}, 3000);
 }
 
+/**
+ * Displays the winner page, handles optional confetti,
+ * and initializes the back button.
+ *
+ * @param themeConfig - The configuration of the selected theme.
+ */
 function winnerPage(themeConfig: ThemeConfig): void {
 	if (!memoryAppRef || !winnerPageRef) return;
 
@@ -36,6 +45,12 @@ function winnerPage(themeConfig: ThemeConfig): void {
 	initWinnerBackButton();
 }
 
+/**
+ * Displays the confetti animation when there is a winner
+ * and the selected theme is Code Vibes.
+ *
+ * @param themeConfig - The configuration of the selected theme.
+ */
 function showConfettiIfNeeded(themeConfig: ThemeConfig): void {
 	const confettiRef = document.getElementById('confetti');
 	if (!confettiRef) return;
@@ -48,6 +63,9 @@ function showConfettiIfNeeded(themeConfig: ThemeConfig): void {
 	}
 }
 
+/**
+ * Initializes the back button on the winner page.
+ */
 function initWinnerBackButton(): void {
 	const backButton = document.getElementById('winnerBackToStartBtn');
 	if (!backButton) return;
@@ -57,6 +75,10 @@ function initWinnerBackButton(): void {
 	});
 }
 
+/**
+ * Resets the game scores, clears the winner page,
+ * and returns to the main page.
+ */
 function resetGameAndShowMainPage(): void {
 	gameState.pointsBlue = 0;
 	gameState.pointsOrange = 0;

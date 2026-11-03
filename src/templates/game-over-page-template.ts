@@ -1,5 +1,13 @@
 import { ThemeConfig } from '../config/themes';
 
+/**
+ * Creates the game-over page markup with the final score and theme-specific images.
+ *
+ * @param themeConfig - The configuration of the selected theme.
+ * @param pointsBlue - The final score of the blue player.
+ * @param pointsOrange - The final score of the orange player.
+ * @returns The HTML markup for the game-over page.
+ */
 export function gameOverPageTemplate(themeConfig: ThemeConfig, pointsBlue: number, pointsOrange: number) {
 	return `
     <main class="game-over-page">

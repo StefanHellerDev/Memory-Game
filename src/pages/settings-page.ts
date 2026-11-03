@@ -1,7 +1,3 @@
-// *************************
-// Main Page / Settings page
-// *************************
-
 import { mainPageTemplate } from '../templates/main-page-template';
 import { initGamePage } from '../pages/game-page';
 import settingsLineBefore from '../assets/img/settings-page-line-before.svg';
@@ -13,12 +9,18 @@ if (!memoryAppRef) {
 	throw new Error('Element with id "memoryApp" not found.');
 }
 
+/**
+ * Displays the main page and initializes the settings page.
+ */
 export function showMainPage(): void {
 	if (!memoryAppRef) return;
 	memoryAppRef.innerHTML = mainPageTemplate();
 	initSettingsPage();
 }
 
+/**
+ * Initializes all interactive controls on the settings page.
+ */
 function initSettingsPage(): void {
 	initThemeInputs();
 	initPlayerInputs();
@@ -26,6 +28,9 @@ function initSettingsPage(): void {
 	initStartButton();
 }
 
+/**
+ * Initializes the theme selection inputs and updates the selected theme preview state.
+ */
 function initThemeInputs(): void {
 	const themePreview = document.getElementById('theme-preview') as HTMLImageElement | null;
 	const themeInputs = document.querySelectorAll<HTMLInputElement>('input[name="gameTheme"]');
@@ -43,6 +48,15 @@ function initThemeInputs(): void {
 	});
 }
 
+/**
+ * Binds hover and change events to a theme input.
+ *
+ * @param input - The theme input element to bind.
+ * @param themePreview - The image element used to preview the selected theme.
+ * @param displayGameTheme - The element used to display the selected theme.
+ * @param getSelectedSrc - Returns the currently selected theme image source.
+ * @param setSelectedSrc - Updates the currently selected theme image source.
+ */
 function bindThemeInput(
 	input: HTMLInputElement,
 	themePreview: HTMLImageElement | null,
@@ -54,6 +68,14 @@ function bindThemeInput(
 	bindThemeChange(input, themePreview, displayGameTheme, setSelectedSrc);
 }
 
+/**
+ * Binds hover events to a theme input label to preview
+ * and restore the selected theme image.
+ *
+ * @param input - The theme input element whose label should react to hover.
+ * @param themePreview - The image element used to display the theme preview.
+ * @param getSelectedSrc - Returns the currently selected theme image source.
+ */
 function bindThemeHover(input: HTMLInputElement, themePreview: HTMLImageElement | null, getSelectedSrc: () => string): void {
 	const label = input.closest('label');
 	if (!label) return;
@@ -62,16 +84,36 @@ function bindThemeHover(input: HTMLInputElement, themePreview: HTMLImageElement 
 	label.addEventListener('mouseleave', () => resetThemePreview(themePreview, getSelectedSrc()));
 }
 
+/**
+ * Displays the preview image for the hovered theme input.
+ *
+ * @param input - The theme input containing the preview image source.
+ * @param themePreview - The image element used to display the theme preview.
+ */
 function showThemePreview(input: HTMLInputElement, themePreview: HTMLImageElement | null): void {
 	if (!themePreview || !input.dataset.previewSrc) return;
 	themePreview.src = input.dataset.previewSrc;
 }
 
+/**
+ * Restores the preview image to the currently selected theme.
+ *
+ * @param themePreview - The image element used to display the theme preview.
+ * @param selectedThemeSrc - The image source of the currently selected theme.
+ */
 function resetThemePreview(themePreview: HTMLImageElement | null, selectedThemeSrc: string): void {
 	if (!themePreview) return;
 	themePreview.src = selectedThemeSrc;
 }
 
+/**
+ * Binds a change event to a theme input.
+ *
+ * @param input - The theme input element to observe.
+ * @param themePreview - The image element used to display the theme preview.
+ * @param displayGameTheme - The element used to display the selected theme.
+ * @param setSelectedSrc - Updates the currently selected theme image source.
+ */
 function bindThemeChange(
 	input: HTMLInputElement,
 	themePreview: HTMLImageElement | null,
@@ -83,6 +125,14 @@ function bindThemeChange(
 	});
 }
 
+/**
+ * Handles a theme selection change and updates the related UI state.
+ *
+ * @param input - The changed theme input element.
+ * @param themePreview - The image element used to display the theme preview.
+ * @param displayGameTheme - The element used to display the selected theme.
+ * @param setSelectedSrc - Updates the currently selected theme image source.
+ */
 function handleThemeChange(
 	input: HTMLInputElement,
 	themePreview: HTMLImageElement | null,
@@ -98,6 +148,14 @@ function handleThemeChange(
 	updateStartButtonState();
 }
 
+/**
+ * Updates the selected theme preview and displayed theme name.
+ *
+ * @param themePreview - The image element used to display the theme preview.
+ * @param displayGameTheme - The element used to display the selected theme name.
+ * @param previewSrc - The image source of the selected theme.
+ * @param themeChoice - The display name of the selected theme.
+ */
 function updateThemeDisplay(themePreview: HTMLImageElement | null, displayGameTheme: HTMLElement | null, previewSrc: string, themeChoice: string): void {
 	if (themePreview) themePreview.src = previewSrc;
 	if (!displayGameTheme) return;
@@ -106,6 +164,9 @@ function updateThemeDisplay(themePreview: HTMLImageElement | null, displayGameTh
 	animateSelection(displayGameTheme);
 }
 
+/**
+ * Initializes the player selection inputs.
+ */
 function initPlayerInputs(): void {
 	const playerInputs = document.querySelectorAll<HTMLInputElement>('input[name="player"]');
 	const displayPlayer = document.getElementById('displayPlayer');
@@ -115,12 +176,24 @@ function initPlayerInputs(): void {
 	});
 }
 
+/**
+ * Binds a change event to a player selection input.
+ *
+ * @param input - The player input element to observe.
+ * @param displayPlayer - The element used to display the selected player.
+ */
 function bindPlayerInput(input: HTMLInputElement, displayPlayer: HTMLElement | null): void {
 	input.addEventListener('change', () => {
 		handlePlayerChange(input, displayPlayer);
 	});
 }
 
+/**
+ * Handles a player selection change and updates the related UI state.
+ *
+ * @param input - The changed player input element.
+ * @param displayPlayer - The element used to display the selected player.
+ */
 function handlePlayerChange(input: HTMLInputElement, displayPlayer: HTMLElement | null): void {
 	const playerChoice = input.dataset.playerChoice;
 	if (!playerChoice) return;
@@ -129,6 +202,12 @@ function handlePlayerChange(input: HTMLInputElement, displayPlayer: HTMLElement 
 	updateStartButtonState();
 }
 
+/**
+ * Updates the displayed player selection and triggers its selection animation.
+ *
+ * @param displayPlayer - The element used to display the selected player.
+ * @param playerChoice - The selected player value to display.
+ */
 function updatePlayerDisplay(displayPlayer: HTMLElement | null, playerChoice: string): void {
 	if (!displayPlayer) return;
 
@@ -136,6 +215,9 @@ function updatePlayerDisplay(displayPlayer: HTMLElement | null, playerChoice: st
 	animateSelection(displayPlayer);
 }
 
+/**
+ * Initializes the board size selection inputs.
+ */
 function initBoardSizeInputs(): void {
 	const boardSizeInputs = document.querySelectorAll<HTMLInputElement>('input[name="boardSize"]');
 	const displayBoardSize = document.getElementById('displayBoardSize');
@@ -145,12 +227,24 @@ function initBoardSizeInputs(): void {
 	});
 }
 
+/**
+ * Binds a change event to a board size input.
+ *
+ * @param input - The board size input element to observe.
+ * @param displayBoardSize - The element used to display the selected board size.
+ */
 function bindBoardSizeInput(input: HTMLInputElement, displayBoardSize: HTMLElement | null): void {
 	input.addEventListener('change', () => {
 		handleBoardSizeChange(input, displayBoardSize);
 	});
 }
 
+/**
+ * Handles a board size selection change and updates the related UI state.
+ *
+ * @param input - The changed board size input element.
+ * @param displayBoardSize - The element used to display the selected board size.
+ */
 function handleBoardSizeChange(input: HTMLInputElement, displayBoardSize: HTMLElement | null): void {
 	const boardSizeChoice = input.dataset.boardSizeChoice;
 	if (!boardSizeChoice) return;
@@ -159,6 +253,12 @@ function handleBoardSizeChange(input: HTMLInputElement, displayBoardSize: HTMLEl
 	updateStartButtonState();
 }
 
+/**
+ * Updates the displayed board size and triggers its selection animation.
+ *
+ * @param displayBoardSize - The element used to display the selected board size.
+ * @param boardSizeChoice - The selected board size value to display.
+ */
 function updateBoardSizeDisplay(displayBoardSize: HTMLElement | null, boardSizeChoice: string): void {
 	if (!displayBoardSize) return;
 
@@ -166,12 +266,22 @@ function updateBoardSizeDisplay(displayBoardSize: HTMLElement | null, boardSizeC
 	animateSelection(displayBoardSize);
 }
 
+/**
+ * Returns the preview image source of the currently selected theme.
+ *
+ * @returns The selected theme preview source, or the default theme image source.
+ */
 function getSelectedThemeSrc(): string {
 	const checkedInput = document.querySelector<HTMLInputElement>('input[name="gameTheme"]:checked');
 
 	return checkedInput?.dataset.previewSrc || themeVisualCodeVibes;
 }
 
+/**
+ * Triggers the selection change animation on a given element.
+ *
+ * @param element - The element that should be animated.
+ */
 function animateSelection(element: HTMLElement): void {
 	element.classList.remove('selection-changed');
 	void element.offsetWidth;
@@ -180,6 +290,10 @@ function animateSelection(element: HTMLElement): void {
 	element.addEventListener('animationend', () => element.classList.remove('selection-changed'), { once: true });
 }
 
+/**
+ * Updates the start button and progress lines based on whether
+ * all required game settings have been selected.
+ */
 function updateStartButtonState(): void {
 	const themeSelected = document.querySelector('input[name="gameTheme"]:checked');
 	const playerSelected = document.querySelector('input[name="player"]:checked');
@@ -191,6 +305,11 @@ function updateStartButtonState(): void {
 	updateProgressLines(Boolean(allSelected));
 }
 
+/**
+ * Enables or disables the start button based on whether all required settings are selected.
+ *
+ * @param allSelected - Indicates whether all required game settings have been selected.
+ */
 function updateStartButton(allSelected: boolean): void {
 	const startButton = document.getElementById('startButton') as HTMLButtonElement | null;
 
@@ -199,19 +318,32 @@ function updateStartButton(allSelected: boolean): void {
 	startButton.disabled = !allSelected;
 }
 
+/**
+ * Updates the progress line images based on whether all required settings are selected.
+ *
+ * @param allSelected - Indicates whether all required game settings have been selected.
+ */
 function updateProgressLines(allSelected: boolean): void {
 	const lines = document.querySelectorAll<HTMLImageElement>('.settings-progress-line');
 	const src = allSelected ? settingsLineAfter : settingsLineBefore;
+
 	lines.forEach((line) => {
 		line.src = src;
 	});
 }
 
+/**
+ * Returns the currently selected game settings.
+ *
+ * @returns The selected theme, player, and board size, or `null` if a required setting is missing.
+ */
 function getSelectedGameSettings() {
 	const theme = document.querySelector<HTMLInputElement>('input[name="gameTheme"]:checked');
 	const player = document.querySelector<HTMLInputElement>('input[name="player"]:checked');
 	const boardSize = document.querySelector<HTMLInputElement>('input[name="boardSize"]:checked');
+
 	if (!theme || !player || !boardSize) return null;
+
 	return {
 		theme: theme.value,
 		player: player.value,
@@ -219,12 +351,19 @@ function getSelectedGameSettings() {
 	};
 }
 
+/**
+ * Initializes the start button and binds the game start handler.
+ */
 function initStartButton(): void {
 	const startButton = document.getElementById('startButton') as HTMLButtonElement | null;
 	if (!startButton) return;
 	startButton.addEventListener('click', saveSettingsAndStartGame);
 }
 
+/**
+ * Saves the selected game settings to session storage
+ * and starts the game page.
+ */
 function saveSettingsAndStartGame(): void {
 	const settings = getSelectedGameSettings();
 	if (!settings) return;

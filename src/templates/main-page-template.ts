@@ -1,14 +1,20 @@
-import settingsHeaderLine from '../assets/img/settings-header-line.png';
-import imageGameThemes from '../assets/img/image_game_themes.png';
+import settingsHeaderLine from '../assets/img/settings-header-line.svg';
+import imageGameThemes from '../assets/img/image_game_themes.svg';
+import settingsLine from '../assets/img/settings-line.svg';
+import imageChoosePlayer from '../assets/img/image_choose_player.svg';
+import imageBoardSize from '../assets/img/image_Board_size.svg';
+import settingsPageLineBefore from '../assets/img/settings-page-line-before.svg';
+import imageStartButton from '../assets/img/smart_display.svg';
 import themeVisualCodeVibes from '../assets/img/code_vibes_theme/theme_visual-code_vibes.png';
-import settingsLine from '../assets/img/settings-line.png';
 import themeVisualGame from '../assets/img/game_theme/theme_visual-game.png';
 import themeVisualFood from '../assets/img/food_theme/theme_visual-food.png';
-import imageChoosePlayer from '../assets/img/image_choose_player.png';
-import imageBoardSize from '../assets/img/image_Board_size.png';
-import settingsPageLineBefore from '../assets/img/settings-page-line-before.svg';
-import imageStartButton from '../assets/img/smart_display.png';
 
+/**
+ * Creates the markup for the main settings page, including theme,
+ * player, and board size selection controls.
+ *
+ * @returns The HTML markup for the main settings page.
+ */
 export function mainPageTemplate() {
 	return `  
   <main class="main-page">
@@ -28,7 +34,7 @@ export function mainPageTemplate() {
 
             <legend class="settings-group--legend">
               <img src="${imageGameThemes}" alt="">
-              <span>Game themes</span>
+              <h2>Game themes</h2>
             </legend>
 
             <label class="settings-group--items">
@@ -57,7 +63,7 @@ export function mainPageTemplate() {
           <fieldset class="settings-group flex-column">
             <legend class="settings-group--legend">
               <img src="${imageChoosePlayer}" alt="">
-              <span>Choose player</span>
+              <h2>Choose player</h2>
             </legend>
 
             <label class="settings-group--items">
@@ -76,7 +82,7 @@ export function mainPageTemplate() {
           <fieldset class="settings-group flex-column">
             <legend class="settings-group--legend">
               <img src="${imageBoardSize}" alt="">
-              <span>Board size</span>
+              <h2>Board size</h2>
             </legend>
 
             <label class="settings-group--items">

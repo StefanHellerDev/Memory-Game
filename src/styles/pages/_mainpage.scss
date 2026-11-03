@@ -63,8 +63,16 @@
 	}
 
 	&--legend {
+		display: flex;
+		gap: 6px;
 		font-weight: 700;
 		font-size: 24px;
+
+		> h2 {
+			font-family: 'Almarai';
+			font-size: 24px;
+			font-weight: 700;
+		}
 	}
 
 	&--items {

@@ -1,6 +1,16 @@
 import { ThemeConfig } from '../config/themes';
 import { MemoryCard } from '../types/game-types';
 
+/**
+ * Creates the complete game page markup, including the scoreboard,
+ * active player indicator, game board, and exit modal.
+ *
+ * @param boardSize - The number of cards displayed on the game board.
+ * @param themeConfig - The configuration of the selected game theme.
+ * @param pointsBlue - The current score of the blue player.
+ * @param pointsOrange - The current score of the orange player.
+ * @returns The HTML markup for the game page.
+ */
 export function gamePageTemplate(boardSize: number, themeConfig: ThemeConfig, pointsBlue: number, pointsOrange: number) {
 	return `
     <main class="game-page">
@@ -18,6 +28,7 @@ export function gamePageTemplate(boardSize: number, themeConfig: ThemeConfig, po
           </div>
 
         </div>
+        
         <div class="game-page__currentPlayerBox">
           Current player: 
           <div class="game-page__showActivePlayer">
@@ -35,9 +46,7 @@ export function gamePageTemplate(boardSize: number, themeConfig: ThemeConfig, po
 
       <section class="game-page__board" id="gameBoard" data-board-size="${boardSize}"></section>
     </main>
-
     
-    <!-- Modal Struktur -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
           <p>Are you sure you want to quit the game?</p>
@@ -52,19 +61,24 @@ export function gamePageTemplate(boardSize: number, themeConfig: ThemeConfig, po
   `;
 }
 
+/**
+ * Creates and adds a single memory card to the game board.
+ *
+ * @param gameBoardRef - The game board element to which the card is added.
+ * @param card - The memory card data containing its ID, pair ID, and image source.
+ * @param themeConfig - The configuration of the selected game theme.
+ */
 export function createSingleCard(gameBoardRef: HTMLElement, card: MemoryCard, themeConfig: ThemeConfig) {
 	gameBoardRef.innerHTML += `
-		<section id="field">
-    	<button class="memory-card" data-pair-id="${card.pairId}" data-card-id="${card.id}">
-      	<div class="memory-card__inner">
-        	<div class="memory-card__face memory-card__face--back">
-						<img src="${card.imageSrc}" alt="Front of Memory Card">
-					</div>
-        	<div class="memory-card__face">
-						<img src="${themeConfig.cardsBack}" alt="Back of Memory Card">
-					</div>
-      	</div>
-    	</button>
-  	</section>
+    <button class="memory-card" data-pair-id="${card.pairId}" data-card-id="${card.id}">
+     	<div class="memory-card__inner">
+       	<div class="memory-card__face memory-card__face--back">
+					<img src="${card.imageSrc}" alt="Front of Memory Card">
+				</div>
+       	<div class="memory-card__face">
+					<img src="${themeConfig.cardsBack}" alt="Back of Memory Card">
+				</div>
+     	</div>
+    </button>
 `;
 }
