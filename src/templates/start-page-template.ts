@@ -1,5 +1,5 @@
 import controllerBig from '../assets/img/background_controller.svg';
-import buttonController from '/assets/img/button_controller.svg';
+import buttonController from '../assets/img/button_controller.svg';
 import buttonArrow from '../assets/img/buttonArrow.svg';
 import buttonArrowHover from '../assets/img/buttonArrowHover.svg';
 
