@@ -15,7 +15,7 @@
 		width: 1100px;
 		position: relative;
 
-		> section {
+		> div {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
@@ -68,7 +68,7 @@
 		font-weight: 700;
 		font-size: 24px;
 
-		> h2 {
+		> span {
 			font-family: 'Almarai';
 			font-size: 24px;
 			font-weight: 700;
@@ -214,4 +214,16 @@ aside {
 	100% {
 		transform: scale(1);
 	}
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }
