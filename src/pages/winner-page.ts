@@ -5,14 +5,7 @@ import { gameState } from '../state/game-state';
 import { showMainPage } from '../pages/settings-page';
 
 const memoryAppRef = document.getElementById('memoryApp');
-if (!memoryAppRef) {
-	throw new Error('Element with id "memoryApp" not found.');
-}
-
 const winnerPageRef = document.getElementById('winnerPage');
-if (!winnerPageRef) {
-	throw new Error('Element with id "winnerPage" not found.');
-}
 
 /**
  * Displays the game-over page and switches to the winner page after a short delay.
@@ -20,8 +13,9 @@ if (!winnerPageRef) {
  * @param themeConfig - The configuration of the selected theme.
  */
 export function gameOver(themeConfig: ThemeConfig): void {
-	if (!memoryAppRef) return;
-
+	if (!memoryAppRef) {
+		throw new Error('Element with id "memoryApp" not found.');
+	}
 	memoryAppRef.innerHTML = gameOverPageTemplate(themeConfig, gameState.pointsBlue, gameState.pointsOrange);
 
 	setTimeout(() => {
@@ -38,8 +32,15 @@ export function gameOver(themeConfig: ThemeConfig): void {
 function winnerPage(themeConfig: ThemeConfig): void {
 	if (!memoryAppRef || !winnerPageRef) return;
 
+	let winnerIndex = 2;
+	if (gameState.pointsBlue > gameState.pointsOrange) {
+		winnerIndex = 0;
+	} else if (gameState.pointsBlue < gameState.pointsOrange) {
+		winnerIndex = 1;
+	}
+
 	memoryAppRef.innerHTML = '';
-	winnerPageRef.innerHTML = winnerPageTemplate(themeConfig, gameState.pointsBlue, gameState.pointsOrange);
+	winnerPageRef.innerHTML = winnerPageTemplate(themeConfig, winnerIndex);
 
 	showConfettiIfNeeded(themeConfig);
 	initWinnerBackButton();

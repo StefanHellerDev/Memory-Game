@@ -9,6 +9,14 @@ import { gameState } from '../state/game-state';
 import { gameOver } from '../pages/winner-page';
 import { initModal } from '../components/modal';
 
+const memoryAppRef = document.getElementById('memoryApp');
+
+interface CardState {
+	firstCard: HTMLButtonElement | null;
+	secondCard: HTMLButtonElement | null;
+	isCheckingCards: boolean;
+}
+
 /**
  * Initializes the game page using the stored game settings.
  * Applies the selected theme, prepares the card pairs, creates the game board,
@@ -89,11 +97,6 @@ function shuffleCards(cardPair: MemoryCard[]): MemoryCard[] {
 	return cardPair;
 }
 
-const memoryAppRef = document.getElementById('memoryApp');
-if (!memoryAppRef) {
-	throw new Error('Element with id "memoryApp" not found.');
-}
-
 /**
  * Creates and renders the game board with all shuffled memory cards.
  *
@@ -102,7 +105,10 @@ if (!memoryAppRef) {
  * @param themeConfig - The configuration of the selected theme.
  */
 function createGameBoard(boardSize: number, shuffledCards: MemoryCard[], themeConfig: ThemeConfig): void {
-	if (!memoryAppRef) return;
+	if (!memoryAppRef) {
+		throw new Error('Element with id "memoryApp" not found.');
+		return;
+	}
 	memoryAppRef.innerHTML = gamePageTemplate(boardSize, themeConfig, gameState.pointsBlue, gameState.pointsOrange);
 
 	const gameBoardRef = document.getElementById('gameBoard');
@@ -145,12 +151,6 @@ function setCurrentPlayerColor(activePlayer: string): void {
 			showActivePlayer.style.backgroundColor = 'var(--color-player-orange)';
 		}
 	}
-}
-
-interface CardState {
-	firstCard: HTMLButtonElement | null;
-	secondCard: HTMLButtonElement | null;
-	isCheckingCards: boolean;
 }
 
 /**
@@ -298,7 +298,6 @@ function handleNonMatchingCards(state: CardState): void {
 	const cardTwo = state.secondCard;
 	state.isCheckingCards = true;
 
-	switchActivePlayer();
 	resetCardsAfterDelay(cardOne, cardTwo, state);
 }
 
@@ -315,6 +314,7 @@ function resetCardsAfterDelay(cardOne: HTMLButtonElement, cardTwo: HTMLButtonEle
 		rotateCardsBack(cardOne, cardTwo);
 		resetSelectedCards(state);
 		state.isCheckingCards = false;
+		switchActivePlayer();
 	}, 1000);
 }
 
