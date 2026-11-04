@@ -76,7 +76,7 @@ export const THEMES: Record<ThemeName, ThemeConfig> = {
 			themeImage('code_vibes_theme/Code_vibes_winner_orange_Player.svg'),
 			themeImage('code_vibes_theme/Code_vibes_draw_Scale.svg'),
 		],
-		winnerBackToStart: [themeImage('code_vibes_theme/Code_vibes_BackToStart.png')],
+		winnerBackToStart: [themeImage('code_vibes_theme/Code_vibes_BackToStart.svg')],
 	},
 
 	game: {
@@ -111,7 +111,7 @@ export const THEMES: Record<ThemeName, ThemeConfig> = {
 			themeImage('game_theme/game_draw_Text.svg'),
 		],
 		winnerPicture: [themeImage('game_theme/game_pokal.svg'), themeImage('game_theme/game_pokal.svg'), themeImage('game_theme/game_draw_Scale.svg')],
-		winnerBackToStart: [themeImage('game_theme/game_BackToStart.png')],
+		winnerBackToStart: [themeImage('game_theme/game_BackToStart.svg')],
 	},
 
 	food: {
@@ -150,6 +150,6 @@ export const THEMES: Record<ThemeName, ThemeConfig> = {
 			themeImage('food_theme/food_winner_orange_Player.svg'),
 			themeImage('food_theme/food_draw_Scale.svg'),
 		],
-		winnerBackToStart: [themeImage('food_theme/food_BackToStart.png')],
+		winnerBackToStart: [themeImage('food_theme/food_BackToStart.svg')],
 	},
 };

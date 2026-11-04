@@ -388,7 +388,9 @@ function updateScoreBoard(activePlayer: string): void {
  */
 function checkIfMatchEnds(boardSize: number, themeConfig: ThemeConfig): void {
 	if (boardSize / 2 == gameState.pointsBlue + gameState.pointsOrange) {
-		gameOver(themeConfig);
+		setTimeout(() => {
+			gameOver(themeConfig);
+		}, 1000);
 	}
 	return;
 }
